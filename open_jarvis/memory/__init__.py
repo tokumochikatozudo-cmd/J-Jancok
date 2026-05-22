@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from open_jarvis.memory.controls import MemoryControlService
 from open_jarvis.memory.memory_habits import get_top_habits, track_command
 from open_jarvis.memory.memory_insights import (
     build_context_prompt as build_context_prompt_insights,
@@ -19,14 +20,17 @@ from open_jarvis.memory.memory_notes import add_note, clear_notes, get_notes
 from open_jarvis.memory.memory_preferences import detect_and_save_preference, get_preference, set_preference
 from open_jarvis.memory.memory_short_term import add_to_short_term, clear_short_term, get_short_term, get_short_term_for_groq
 from open_jarvis.memory.memory_store import DEFAULT_MEMORY, MAX_HABITS, MAX_NOTES, load_memory, prune_memory, save_memory
+from open_jarvis.memory.privacy_mode import memory_reads_enabled
 
 
-def build_context_prompt() -> str:
+def build_context_prompt(*, config_manager=None) -> str:
+    if not memory_reads_enabled(config_manager):
+        return ""
     memory = load_memory()
     return build_context_prompt_insights(
         memory=memory,
         recent=get_short_term()[-3:] if get_short_term() else [],
-        top_habits=get_top_habits(3),
+        top_habits=get_top_habits(3, config_manager=config_manager),
     )
 
 
@@ -60,13 +64,11 @@ def summarize_recent_activity(limit: int = 5) -> str:
     )
 
 
-_memory = load_memory()
-
-
 __all__ = [
     "DEFAULT_MEMORY",
     "MAX_HABITS",
     "MAX_NOTES",
+    "MemoryControlService",
     "add_note",
     "add_to_short_term",
     "build_context_prompt",

@@ -5,8 +5,8 @@ from __future__ import annotations
 import copy
 import datetime
 import json
-import os
 from json import JSONDecodeError
+from pathlib import Path
 from typing import Any
 
 from open_jarvis.utils.jarvis_logging import get_logger
@@ -34,12 +34,13 @@ MAX_NOTES = 25
 MAX_HABITS = 50
 
 
-def load_memory() -> dict:
-    """Load memory from disk, creating a default file if needed."""
+def load_memory(memory_file: str | Path = MEMORY_FILE, *, create_if_missing: bool = True) -> dict:
+    """Load memory from disk, optionally returning defaults without writing."""
 
-    if os.path.exists(MEMORY_FILE):
+    path = Path(memory_file)
+    if path.exists():
         try:
-            with open(MEMORY_FILE, encoding="utf-8") as file:
+            with path.open(encoding="utf-8") as file:
                 data = json.load(file)
                 for key, value in DEFAULT_MEMORY.items():
                     if key not in data:
@@ -50,17 +51,20 @@ def load_memory() -> dict:
 
     memory = copy.deepcopy(DEFAULT_MEMORY)
     memory["created_at"] = datetime.datetime.now().isoformat()
-    save_memory(memory)
+    if create_if_missing:
+        save_memory(memory, memory_file=path)
     return memory
 
 
-def save_memory(memory: dict):
+def save_memory(memory: dict, memory_file: str | Path = MEMORY_FILE):
     """Save memory to disk."""
 
     try:
         memory = prune_memory(memory, persist=False)
         memory["last_seen"] = datetime.datetime.now().isoformat()
-        with open(MEMORY_FILE, "w", encoding="utf-8") as file:
+        path = Path(memory_file)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("w", encoding="utf-8") as file:
             json.dump(memory, file, indent=2, ensure_ascii=False)
     except OSError as exc:
         logger.exception("Memory save error: %s", exc)

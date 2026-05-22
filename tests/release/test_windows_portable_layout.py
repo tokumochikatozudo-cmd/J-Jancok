@@ -25,7 +25,15 @@ class WindowsPortableLayoutTest(TestCase):
         self.assertIn("optional_models", GUIDANCE_FOLDERS)
 
     def test_policy_denies_private_and_generated_paths(self):
-        denied = [".env", "memory.json", "logs/jarvis.log", "__pycache__/x.pyc", "build/tmp.txt", "secret-token.txt"]
+        denied = [
+            ".env",
+            "memory.json",
+            "exports/private-memory-export.json",
+            "logs/jarvis.log",
+            "__pycache__/x.pyc",
+            "build/tmp.txt",
+            "secret-token.txt",
+        ]
 
         for path in denied:
             with self.subTest(path=path):

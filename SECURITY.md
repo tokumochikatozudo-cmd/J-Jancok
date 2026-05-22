@@ -11,7 +11,7 @@ Open.Jarvis can listen to voice commands, open applications, control the desktop
 - Plugin manifests must keep entrypoints inside the plugin directory.
 - Plugin discovery must not execute plugin code.
 - Plugin permissions are deny-by-default for unknown, high-risk, and critical capabilities.
-- Privacy mode can disable memory writes and mask secret-like values.
+- Privacy mode can disable normal memory collection writes and mask secret-like values in memory views and exports.
 - Release signing uses trusted signers and a signing key policy.
 - Health checks surface missing credentials before normal runtime use.
 - Public release checks treat signing as optional for source releases, but signed executable/model artifacts should use a trusted signing key.
@@ -24,6 +24,7 @@ Open.Jarvis can listen to voice commands, open applications, control the desktop
 - Run `python repo_hygiene.py --include-secrets` before publishing.
 - Run `python repo_hygiene.py --clean` to remove generated artifacts; add `--include-secrets` only after backing up or rotating local keys.
 - Do not paste API keys, OAuth tokens, Spotify secrets, plugin signing keys, release signing keys, runtime logs, or JSONL event streams into issues.
+- Keep memory exports private. Exports mask secret-like values, but notes, habits, and preferences can still contain personal data.
 - Do not paste private plugin manifests if they contain local paths, internal package names, or signing metadata.
 - Logs and UI messages should mask secret-like values instead of printing raw credentials.
 
@@ -49,6 +50,7 @@ This project is pre-release. Treat the current main workspace as the only suppor
 - Run `python project_audit.py`.
 - Never commit `.env`, API keys, tokens, generated secrets, or local user data.
 - Never commit real `config/settings.json` files from source or portable runs.
+- Never commit `memory.json` or user-selected memory export files from local data-control flows.
 - Prefer allowlists over blocklists for commands, plugins, and URLs.
 - Add negative tests for plugin permissions, broken plugin hooks, and invalid manifests.
 

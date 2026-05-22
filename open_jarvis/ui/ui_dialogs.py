@@ -9,13 +9,13 @@ import customtkinter as ctk
 
 from open_jarvis.health.health_center import apply_safe_health_fixes, build_health_center
 from open_jarvis.health.observability import build_runtime_event_snapshot
-from open_jarvis.memory import build_memory_health_report, load_memory
+from open_jarvis.memory import MemoryControlService, build_memory_health_report
 from open_jarvis.security.jarvis_admin import (
     build_env_template,
     build_health_checks,
     render_health_report,
 )
-from open_jarvis.ui.memory_panel import build_memory_panel
+from open_jarvis.ui.memory_panel import MemoryPanelModel
 from open_jarvis.ui.settings_panel import SettingsPanelModel
 from open_jarvis.ui.ui_theme import PALETTE, font
 
@@ -74,13 +74,15 @@ def build_health_center_text(checks: list[dict] | None = None) -> str:
 def build_memory_view_text() -> str:
     """Render current memory state without exposing implementation details."""
 
-    memory = load_memory()
-    panel = build_memory_panel(memory)
+    model = MemoryPanelModel(MemoryControlService())
+    memory = model.service.view_memory()
+    panel = model.view_model()
     health = build_memory_health_report(memory)
     lines = [
         "Memory Center",
         f"Quality score: {health.get('score', 'unknown')}",
         f"Preferences: {panel['counts']['preferences']}  Notes: {panel['counts']['notes']}  Habits: {panel['counts']['habits']}",
+        f"Memory writes: {panel['privacy']['memory_writes']}  Retention: {panel['privacy']['retention']}",
         "",
         "Preferences",
     ]

@@ -654,6 +654,12 @@ Source mode stores non-secret settings in the current user's local app data. Por
 
 Secrets remain environment-only. The Settings UI shows only masked status for API keys, OAuth secrets, tokens, release signing keys, and plugin signing keys. Open.Jarvis does not claim encrypted vault storage or cloud sync.
 
+### Memory Privacy And Data Control
+
+Open.Jarvis v0.7.0 builds on the settings system with local memory privacy controls. When `privacy.privacy_mode` is enabled or `privacy.memory_enabled` is disabled in non-secret settings, normal note, habit, and detected-preference collection does not add new persistent memory writes. Explicit user-directed data controls remain available so existing local memory can be viewed, listed, deleted, cleared, or exported.
+
+Memory exports are masked JSON snapshots intended for a user-selected private path. They mask secret-like assignments and sensitive preference keys, but notes and habits can still be personal data. Do not commit exports, `memory.json`, `config/settings.json`, logs, or other private runtime files.
+
 | Setting | Purpose | Safe default |
 | --- | --- | --- |
 | `JARVIS_AI_MODE` | AI routing mode: `auto`, `free_cloud`, `offline`, or `rules` | `auto` |

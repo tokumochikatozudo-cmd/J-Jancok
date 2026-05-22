@@ -5,11 +5,14 @@ from __future__ import annotations
 import re
 
 from open_jarvis.memory.memory_store import load_memory, save_memory
+from open_jarvis.memory.privacy_mode import memory_reads_enabled, memory_writes_enabled
 
 
-def set_preference(key: str, value):
+def set_preference(key: str, value, *, config_manager=None):
     """Save a user preference."""
 
+    if not memory_writes_enabled(config_manager):
+        return
     memory = load_memory()
     if key in memory["preferences"]:
         memory["preferences"][key] = value
@@ -18,9 +21,11 @@ def set_preference(key: str, value):
     save_memory(memory)
 
 
-def get_preference(key: str):
+def get_preference(key: str, *, config_manager=None):
     """Get a user preference."""
 
+    if not memory_reads_enabled(config_manager):
+        return None
     memory = load_memory()
     if key in memory["preferences"]:
         return memory["preferences"][key]

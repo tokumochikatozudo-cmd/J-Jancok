@@ -46,3 +46,26 @@ def delete_note(memory: dict[str, Any], index: int) -> dict[str, Any]:
         del notes[index]
     updated["notes"] = notes
     return updated
+
+
+class MemoryPanelModel:
+    """Headless-safe bridge from UI controls to memory data controls."""
+
+    def __init__(self, service) -> None:
+        self.service = service
+
+    def view_model(self) -> dict[str, Any]:
+        state = self.service.privacy_state()
+        return build_memory_panel(self.service.view_memory(), privacy_enabled=bool(state["enabled"]))
+
+    def list_memory(self) -> list[dict[str, Any]]:
+        return self.service.list_memory()
+
+    def delete_note(self, index: int) -> dict[str, Any]:
+        return self.service.delete_note(index)
+
+    def clear_memory(self) -> dict[str, Any]:
+        return self.service.clear_memory()
+
+    def export_memory(self, export_path: str) -> dict[str, Any]:
+        return self.service.export_memory(export_path)

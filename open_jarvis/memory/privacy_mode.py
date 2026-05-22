@@ -40,3 +40,27 @@ def build_privacy_session(enabled: bool = False) -> dict[str, str | bool]:
         "retention": "ephemeral" if enabled else "normal",
         "log_masking": "strict" if enabled else "standard",
     }
+
+
+def memory_writes_enabled(config_manager=None) -> bool:
+    """Return whether configured memory collection writes may persist."""
+
+    return _persistent_memory_enabled(config_manager)
+
+
+def memory_reads_enabled(config_manager=None) -> bool:
+    """Return whether persisted memory may personalize normal runtime reads."""
+
+    return _persistent_memory_enabled(config_manager)
+
+
+def _persistent_memory_enabled(config_manager=None) -> bool:
+    try:
+        if config_manager is None:
+            from open_jarvis.config.manager import ConfigManager
+
+            config_manager = ConfigManager()
+        config_manager.load()
+        return bool(config_manager.get("privacy.memory_enabled", True)) and not bool(config_manager.get("privacy.privacy_mode", False))
+    except (KeyError, OSError, ValueError):
+        return True

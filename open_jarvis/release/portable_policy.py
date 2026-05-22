@@ -19,6 +19,7 @@ DENIED_PARTS = {
     "build",
     "cache",
     "dist",
+    "exports",
     "logs",
     "release",
     "temp",
