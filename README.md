@@ -2,34 +2,90 @@
 
 > "Sometimes you gotta run before you can walk." - Tony Stark
 
-An AI desktop assistant inspired by Iron Man's JARVIS. Built with Python, powered by free-first local command routing with optional Groq cloud AI, and designed to combine voice control, desktop automation, memory, productivity helpers, plugin safety, release checks, and a cinematic cyber interface in one Windows-first system.
+Open.Jarvis is a Windows-first open-source desktop AI assistant inspired by Iron Man's JARVIS. It combines voice and text commands, local-first command routing, optional Groq cloud fallback, desktop automation, memory controls, plugin safety, diagnostics, release checks, and a cinematic cyber-style UI.
 
-J.A.R.V.I.S can run in a keyless degraded mode. Local rules, the desktop UI, memory helpers, health checks, and many system commands work without API keys. Groq, Spotify, Gemini, and other cloud-backed capabilities are optional integrations.
+Open.Jarvis is designed to run in a keyless degraded mode. Local rules, the desktop UI, memory helpers, health checks, and many system commands can work without API keys. Groq, Spotify, Gemini, and other cloud-backed capabilities are optional integrations.
+
+---
+
+## Project Status
+
+| Area | Status |
+| --- | --- |
+| Primary platform | Windows 10 / Windows 11 |
+| Language | Python |
+| Main interface | Cyber-style desktop UI |
+| Command modes | Voice and text |
+| Default AI posture | Local-first / free-first |
+| Cloud fallback | Optional Groq integration |
+| Music control | Optional Spotify integration |
+| Memory | Local memory with privacy controls |
+| Safety | Destructive actions blocked by default |
+| License | MIT |
 
 ---
 
 ## Features
 
-- Wake word detection with `Jarvis`
-- Natural language command handling with rule parsing plus Groq AI fallback
-- Free-first local routing to reduce latency and API usage
-- British-style voice responses with Edge TTS
-- Custom cyber desktop UI with live service status
+### Assistant Runtime
+
+- Wake-word flow with `Jarvis`
+- Text command input through the desktop UI
+- Local-first command routing before optional AI fallback
+- Rule parsing plus optional Groq AI fallback
 - Runtime states for `BOOTING`, `STANDBY`, `LISTENING`, `PROCESSING`, `EXECUTING`, `SPEAKING`, `ERROR`, and `OFFLINE`
-- Command stream panel with structured terminal-style events
-- Live system status bar with time, CPU, memory, latency, uptime, AI status, permission mode, and posture
-- Memory system with notes, habits, preferences, short-term context, health scoring, and summaries
-- Clipboard reading and Groq-backed or fallback summarization
-- Browser opening, safe URL handling, Google search, and app launching
-- Desktop automation for screenshots, keyboard shortcuts, mouse clicks, scrolling, and window control
-- Spotify playback controls when Spotify credentials are configured
+- Structured command stream events for UI and diagnostics
+- Live system status with time, CPU, memory, latency, uptime, AI status, permission mode, and posture
+
+### Desktop Automation
+
+- Browser opening, website launching, normalized safe URL opening, and Google search
+- App launching for common Windows tools and mapped desktop applications
+- Screenshot capture
+- Clipboard reading and summarization
+- Keyboard shortcuts, mouse actions, scrolling, and window control
 - Timers and runtime workflow helpers
-- Privacy mode and secret masking before runtime events are written
+
+### Voice And Audio
+
+- Optional microphone-based voice input
+- Wake-word activation with `Jarvis`
+- British-style voice responses with Edge TTS
+- Optional offline STT planning with Vosk fallback support
+- Push-to-talk fallback planning for systems where always-listening mode is disabled
+- Microphone and audio readiness checks
+
+### Memory And Privacy
+
+- Notes, habits, preferences, short-term context, health scoring, and summaries
+- Daily assistant summary helpers
+- Privacy mode for sensitive sessions
+- Secret masking before runtime events are written
+- Local memory controls for viewing, listing, deleting, clearing, and exporting data
+
+### Integrations
+
+- Optional Groq cloud AI fallback
+- Optional Spotify playback controls
+- Optional Gemini key reserved for future vision and multimodal workflows
+- Optional local/offline provider planning
+- Model catalog verification helpers
+
+### Security And Release Quality
+
 - Permission profiles and destructive-action safety gates
-- Local plugin system with manifests, permissions, trust state, signature verification, lifecycle hooks, and sandboxed execution helpers
-- Offline STT planning with optional Vosk fallback support
-- Health checker, project audit, repository hygiene checker, release readiness checker, eval suite, screenshot regression, and automated tests
-- Release signing helpers, model catalog verification, and source-release hygiene tooling
+- Safe URL handling
+- Plugin manifests, permissions, trust state, signature verification, lifecycle hooks, and sandbox helpers
+- Health checker
+- Project audit
+- Repository hygiene checker
+- Public release readiness checker
+- Public source safety scanner
+- Evaluation suite
+- UI smoke tests
+- Screenshot regression checks
+- Release signing helpers
+- Source-release hygiene tooling
 
 ---
 
@@ -50,90 +106,109 @@ These items are documented roadmap work. They may have planning helpers or confi
 
 ---
 
+## Screenshots
+
+Screenshots should be stored under `docs/assets/`.
+
+Recommended images:
+
+| Screenshot | Purpose |
+| --- | --- |
+| `docs/assets/dashboard.png` | Main cyber cockpit UI |
+| `docs/assets/system-status.png` | Live system status and runtime posture |
+| `docs/assets/memory-panel.png` | Local memory and privacy controls |
+| `docs/assets/security-center.png` | Permission profile, privacy mode, and safety status |
+| `docs/assets/plugin-marketplace.png` | Local plugin trust and permission overview |
+
+Do not add image links until the matching files exist. Broken image links make the public README look unfinished.
+
+---
+
 ## Project Structure
 
 ```text
 Open.Jarvis/
-+-- .github/                CI workflow and issue templates
-+-- agents/                 Reserved for future agent implementations
-+-- core/                   Reserved core package area
-+-- docs/                   Architecture, threat model, plugin security, offline STT, and release docs
-+-- evals/                  Evaluation support area
-+-- open_jarvis/            Main source package
-|   +-- app/                Package entry point for terminal mode
-|   +-- audio/              voice state, wake word, push-to-talk, microphone diagnostics, TTS queue, STT/TTS helpers
-|   +-- commands/           komutlar.py, local router, Groq router, action schema, dispatcher
-|   |   `-- domains/        Runtime, media, and memory action handlers
-|   +-- evaluation/         evaluation_suite.py, eval_runner.py, eval_artifacts.py, eval_measurements.py, performance_benchmarks.py
-|   +-- health/             health_center.py, observability.py, feature_quality.py
-|   +-- integrations/       llm_fallback.py, provider_health.py, offline_profile.py, model_installer.py, url_safety.py
-|   +-- memory/             memory_*.py, privacy_mode.py, user_profiles.py, compatibility re-exports
-|   +-- plugins/            manifest.py, permissions.py, context.py, registry.py, loader.py, plugin_*.py
-|   +-- release/            repo_hygiene.py, project_audit.py, release_build.py, maintenance.py
-|   +-- runtime/            jarvis_runtime.py, wake word, command listener, timer, orchestration, UI bridge, personality
-|   +-- security/           jarvis_admin.py, release_security.py, public_release.py, security policy helpers
-|   +-- ui/                 arayuz.py, ui_theme.py, ui_components.py, ui_*.py, memory_panel.py, security_center.py
-|   `-- utils/              kontrol.py, jarvis_logging.py
-+-- plugins/                Reserved for local plugin packages
-+-- tests/                  Automated tests
-+-- arayuz.py               Backward-compatible UI launcher
-+-- jarvis.py               Backward-compatible terminal launcher
-+-- kontrol.py              Backward-compatible health checker launcher
-+-- repo_hygiene.py         Backward-compatible hygiene checker launcher
-+-- project_audit.py        Backward-compatible static audit launcher
-+-- public_release.py       Backward-compatible release readiness launcher
-+-- eval_runner.py          Backward-compatible eval CLI launcher
-+-- release_build.py        Backward-compatible release build launcher
-+-- model_installer.py      Backward-compatible signed model catalog launcher
-+-- .env.example            API key and runtime settings template
-+-- .gitignore              Keeps secrets and generated files out of GitHub
-+-- pyproject.toml          Ruff, mypy, and coverage configuration
-+-- requirements.txt        Runtime dependencies
-+-- requirements-dev.txt    Developer, lint, test, and build dependencies
-+-- SECURITY.md             Security policy
-+-- CONTRIBUTING.md         Contribution guide
-+-- LICENSE                 MIT License
-`-- README.md               This file
++-- .github/                         CI workflow and issue templates
++-- agents/                          Reserved for future agent implementations
++-- core/                            Reserved core package area
++-- docs/                            Architecture, threat model, plugin security, offline STT, and release docs
++-- evals/                           Evaluation support area
++-- open_jarvis/                     Main source package
+|   +-- app/                         Package entry point for terminal mode
+|   +-- audio/                       Voice state, wake word, push-to-talk, microphone diagnostics, TTS queue, STT/TTS helpers
+|   +-- commands/                    Local router, Groq router, action schema, dispatcher
+|   |   `-- domains/                 Runtime, media, and memory action handlers
+|   +-- evaluation/                  Evaluation suite, runner, artifacts, measurements, and benchmarks
+|   +-- health/                      Health center, observability, and feature quality
+|   +-- integrations/                LLM fallback, provider health, offline profile, model installer, URL safety
+|   +-- memory/                      Memory modules, privacy mode, user profiles, compatibility re-exports
+|   +-- plugins/                     Manifest, permissions, context, registry, loader, plugin helpers
+|   +-- release/                     Repo hygiene, project audit, release build, maintenance
+|   +-- runtime/                     Runtime loop, wake listener, timers, orchestration, UI bridge, personality
+|   +-- security/                    Admin helpers, release security, public release policy helpers
+|   +-- ui/                          Desktop UI, theme, components, memory panel, security center
+|   `-- utils/                       Health launcher and logging helpers
++-- plugins/                         Reserved for local plugin packages
++-- tests/                           Automated tests
++-- arayuz.py                        Backward-compatible UI launcher
++-- jarvis.py                        Backward-compatible terminal launcher
++-- kontrol.py                       Backward-compatible health checker launcher
++-- repo_hygiene.py                  Backward-compatible hygiene checker launcher
++-- project_audit.py                 Backward-compatible static audit launcher
++-- public_release.py                Backward-compatible release readiness launcher
++-- eval_runner.py                   Backward-compatible eval CLI launcher
++-- release_build.py                 Backward-compatible release build launcher
++-- model_installer.py               Backward-compatible signed model catalog launcher
++-- .env.example                     API key and runtime settings template
++-- .gitignore                       Keeps secrets and generated files out of GitHub
++-- pyproject.toml                   Ruff, mypy, and coverage configuration
++-- requirements.txt                 Runtime dependencies
++-- requirements-dev.txt             Developer, lint, test, and build dependencies
++-- SECURITY.md                      Security policy
++-- CONTRIBUTING.md                  Contribution guide
++-- LICENSE                          MIT License
+`-- README.md                        This file
 ```
 
 Generated runtime output such as `logs/`, `exports/`, `memory.json`, caches, build output, and release bundles should not be committed.
 
-Portable Windows packaging is prepared through a dry-run-capable workflow. See `docs/WINDOWS_PORTABLE.md` for user guidance and `docs/BUILD_WINDOWS.md` for build and verification steps. Full installer support is future work; v0.5.0 focuses on safe portable ZIP preparation.
+Portable Windows packaging is prepared through a dry-run-capable workflow. See `docs/WINDOWS_PORTABLE.md` for user guidance and `docs/BUILD_WINDOWS.md` for build and verification steps. Full installer support is future work.
 
 ---
 
 ## Installation
 
-Requirements:
+### Requirements
 
-- Windows 10 or 11
+- Windows 10 or Windows 11
 - Python 3.11+
-- Optional: a working microphone for voice input
-- Optional: speakers or an audio output device for voice responses
+- Optional microphone for voice input
+- Optional speakers or audio output for spoken responses
+- Optional API keys for Groq, Spotify, or Gemini-backed future workflows
 
-Recommended install:
+### Recommended Install
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-Developer install:
+### Developer Install
 
 ```powershell
 python -m pip install -r requirements.txt
 python -m pip install -r requirements-dev.txt
 ```
 
-Manual package install:
+### Manual Package Install
 
 ```powershell
 python -m pip install speechrecognition edge-tts pygame psutil requests groq spotipy pyautogui pyperclip customtkinter python-dotenv vosk schedule
 python -m pip install pyaudio
 ```
 
-If `pyaudio` fails on your machine, install it using a Windows wheel or your preferred package method.
+If `pyaudio` fails on your machine, install it through a compatible Windows wheel or your preferred package method.
 
-Check installation:
+### Check Installation
 
 ```powershell
 python kontrol.py --no-pause
@@ -143,15 +218,15 @@ python kontrol.py --no-pause
 
 ## Setup
 
-### 1. Groq API Key
+### 1. Groq API Key Optional
 
 - Go to [Groq Console](https://console.groq.com)
 - Create an API key
 - Copy your key
 
-Groq is optional. Without it, J.A.R.V.I.S keeps local rule-based commands available and reports local-only mode.
+Groq is optional. Without it, Open.Jarvis keeps local rule-based commands available and reports local-only mode.
 
-### 2. Gemini API Key
+### 2. Gemini API Key Optional
 
 - Go to [Google AI Studio](https://aistudio.google.com/app/apikey)
 - Create an API key
@@ -188,7 +263,9 @@ GROQ_API_KEY=
 JARVIS_ENABLE_GROQ=false
 JARVIS_GROQ_MODEL=llama-3.1-8b-instant
 JARVIS_AI_MODE=auto
+
 GEMINI_API_KEY=
+
 SPOTIFY_CLIENT_ID=
 SPOTIFY_CLIENT_SECRET=
 SPOTIFY_REDIRECT_URI=
@@ -206,97 +283,97 @@ Important:
 
 ## Running
 
-UI mode:
+### Desktop UI
 
 ```powershell
 python arayuz.py
 ```
 
-Terminal mode:
+### Terminal Mode
 
 ```powershell
 python -m open_jarvis.app.main
 ```
 
-Backward-compatible terminal launcher:
+### Backward-Compatible Terminal Launcher
 
 ```powershell
 python jarvis.py
 ```
 
-Weekly update script:
+### Weekly Update Script
 
 ```powershell
 python haftalik_guncelleme.py
 ```
 
-Health checker:
+### Health Checker
 
 ```powershell
 python kontrol.py --no-pause
 ```
 
-Windows portable build dry-run:
+### Windows Portable Build Dry Run
 
 ```powershell
 python scripts/build_windows_portable.py --version v0.5.0 --dry-run
 ```
 
-Portable artifact verification:
+### Portable Artifact Verification
 
 ```powershell
 python scripts/verify_release_artifact.py path\to\Open.Jarvis-v0.5.0-windows-portable
 ```
 
-Project audit:
+### Project Audit
 
 ```powershell
 python project_audit.py
 ```
 
-Repository hygiene check:
+### Repository Hygiene Check
 
 ```powershell
 python repo_hygiene.py --include-secrets
 ```
 
-Public release readiness:
+### Public Release Readiness
 
 ```powershell
 python public_release.py
 ```
 
-Public source safety scan:
+### Public Source Safety Scan
 
 ```powershell
 python scripts/public_release_check.py
 ```
 
-Full test suite:
+### Full Test Suite
 
 ```powershell
 python -m pytest
 ```
 
-Unittest runner:
+### Unittest Runner
 
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
-UI smoke test:
+### UI Smoke Test
 
 ```powershell
 python ui_smoke.py
 ```
 
-UI screenshot regression:
+### UI Screenshot Regression
 
 ```powershell
 python ui_screenshot_regression.py
 ```
 
-Lint:
+### Lint
 
 ```powershell
 python -m ruff check .
@@ -308,7 +385,9 @@ python -m ruff check .
 
 ### Activation
 
-Say `Jarvis` to wake the assistant. After the command completes, it returns to standby mode. Voice is optional: if wake-word mode or the microphone is unavailable, the UI and text/local command paths remain usable. Push-to-talk is the intended fallback path for systems where always-listening wake-word mode is disabled.
+Say `Jarvis` to wake the assistant. After the command completes, it returns to standby mode.
+
+Voice is optional. If wake-word mode or the microphone is unavailable, the UI and text/local command paths remain usable. Push-to-talk is the intended fallback path for systems where always-listening wake-word mode is disabled.
 
 ### Applications
 
@@ -397,34 +476,36 @@ Say `Jarvis` to wake the assistant. After the command completes, it returns to s
 
 ## Safety
 
-Dangerous actions are blocked unless explicitly allowed. This includes:
+Dangerous actions are blocked unless explicitly allowed.
 
-- shutdown
-- restart
-- sleep
-- lock screen
-- unsafe URLs
-- risky plugin entrypoints
-- destructive desktop actions
-- risky input automation
+This includes:
+
+- Shutdown
+- Restart
+- Sleep
+- Lock screen
+- Unsafe URLs
+- Risky plugin entrypoints
+- Destructive desktop actions
+- Risky input automation
 
 Safety controls include:
 
 - `JARVIS_ALLOW_DESTRUCTIVE_ACTIONS=false` by default
 - `JARVIS_PERMISSION_PROFILE=normal` by default
 - URL normalization that only allows HTTP and HTTPS browser links
-- plugin path traversal checks
-- plugin signature verification
-- privacy mode for sensitive sessions
-- secret masking before runtime event logs are written
+- Plugin path traversal checks
+- Plugin signature verification
+- Privacy mode for sensitive sessions
+- Secret masking before runtime event logs are written
 
-Jarvis will use confirmation and permission controls where the action policy requires it.
+Jarvis uses confirmation and permission controls where the action policy requires it.
 
 ---
 
 ## Keyless And Degraded Mode
 
-J.A.R.V.I.S is designed to start without optional credentials.
+Open.Jarvis is designed to start without optional credentials.
 
 | Missing item | Behavior |
 | --- | --- |
@@ -443,20 +524,20 @@ J.A.R.V.I.S is designed to start without optional credentials.
 
 Current project quality checks include:
 
-- automated health checker
-- runtime service validation
-- startup degraded-mode reporting for missing Groq, Spotify, microphone, and STT mode
-- deterministic and measured eval coverage
-- unit tests
+- Automated health checker
+- Runtime service validation
+- Startup degraded-mode reporting for missing Groq, Spotify, microphone, and STT mode
+- Deterministic and measured eval coverage
+- Unit tests
 - Ruff linting
-- static project audit
-- repository hygiene scanning
-- public source secret and personal-data scanning
-- public release readiness scanning
-- memory and action history tracking
-- release signing smoke checks
-- signed model catalog verification
-- feature quality reporting
+- Static project audit
+- Repository hygiene scanning
+- Public source secret and personal-data scanning
+- Public release readiness scanning
+- Memory and action history tracking
+- Release signing smoke checks
+- Signed model catalog verification
+- Feature quality reporting
 - UI smoke and screenshot regression checks
 
 Current verified baseline:
@@ -477,9 +558,17 @@ Expected warnings in a fresh keyless setup:
 
 - Groq API key not configured
 - Spotify credentials missing
-- optional release signing key missing
-- microphone calibration not completed
-- onboarding not completed
+- Optional release signing key missing
+- Microphone calibration not completed
+- Onboarding not completed
+
+---
+
+## Version Notes
+
+The GitHub Releases page is the source of truth for published release artifacts. The `main` branch may document features that are already merged but not yet published as a formal GitHub Release.
+
+When a section mentions a future or upcoming version, treat it as current-main documentation unless the matching tag and GitHub Release are available.
 
 ---
 
@@ -520,7 +609,7 @@ Expected warnings in a fresh keyless setup:
 
 ## Product Feature Modules
 
-These modules are intentionally small, testable, and reusable from the desktop app:
+These modules are intentionally small, testable, and reusable from the desktop app.
 
 | Capability | Module | What it adds |
 | --- | --- | --- |
@@ -645,28 +734,26 @@ Open.Jarvis v0.6.0 adds a central configuration manager for non-secret preferenc
 
 Configuration precedence is:
 
-1. built-in safe defaults
-2. environment variables and legacy `.env` values
-3. user-local `settings.json` for non-secret settings
-4. explicit Settings UI saves
+1. Built-in safe defaults
+2. Environment variables and legacy `.env` values
+3. User-local `settings.json` for non-secret settings
+4. Explicit Settings UI saves
 
-Source mode stores non-secret settings in the current user's local app data. Portable mode saves non-secret settings to `config/settings.json` in the extracted portable copy. Real `settings.json` files are private user data and must not be committed or shipped in release ZIPs.
+Source mode stores non-secret settings in the current user's local app data. Portable mode saves non-secret settings to `config/settings.json` in the extracted portable copy.
+
+Real `settings.json` files are private user data and must not be committed or shipped in release ZIPs.
 
 Secrets remain environment-only. The Settings UI shows only masked status for API keys, OAuth secrets, tokens, release signing keys, and plugin signing keys. Open.Jarvis does not claim encrypted vault storage or cloud sync.
 
 ### Memory Privacy And Data Control
 
-Open.Jarvis v0.7.0 builds on the settings system with local memory privacy controls. When `privacy.privacy_mode` is enabled or `privacy.memory_enabled` is disabled in non-secret settings, normal note, habit, and detected-preference collection does not add new persistent memory writes. Explicit user-directed data controls remain available so existing local memory can be viewed, listed, deleted, cleared, or exported.
+Open.Jarvis v0.7.0 builds on the settings system with local memory privacy controls. When `privacy.privacy_mode` is enabled or `privacy.memory_enabled` is disabled in non-secret settings, normal note, habit, and detected-preference collection does not add new persistent memory writes.
 
-Memory exports are masked JSON snapshots intended for a user-selected private path. They mask secret-like assignments and sensitive preference keys, but notes and habits can still be personal data. Do not commit exports, `memory.json`, `config/settings.json`, logs, or other private runtime files.
+Explicit user-directed data controls remain available so existing local memory can be viewed, listed, deleted, cleared, or exported.
 
-### Provider System And AI Fallback Control
+Memory exports are masked JSON snapshots intended for a user-selected private path. They mask secret-like assignments and sensitive preference keys, but notes and habits can still be personal data.
 
-Open.Jarvis v0.8.0 routes AI-style command analysis through a local-first provider system. The local provider uses deterministic command rules and requires no network or API key. Groq remains optional and is isolated behind an explicit provider adapter.
-
-Cloud fallback is disabled by default. Groq is called only when local routing cannot handle a command and non-secret settings explicitly enable cloud fallback, Groq, and the Groq cloud provider. A configured `GROQ_API_KEY` alone does not make cloud fallback mandatory.
-
-Provider prompts use the existing memory privacy gate. When `privacy.privacy_mode` is enabled or `privacy.memory_enabled` is disabled, persisted notes, preferences, and habits are not attached to provider prompts. If cloud fallback is enabled, command text may be sent to the selected cloud provider; Open.Jarvis does not claim encryption or that cloud providers never receive data.
+Do not commit exports, `memory.json`, `config/settings.json`, logs, or other private runtime files.
 
 | Setting | Purpose | Safe default |
 | --- | --- | --- |
@@ -693,25 +780,24 @@ Provider prompts use the existing memory privacy gate. When `privacy.privacy_mod
 | `JARVIS_PERMISSION_PROFILE` | Permission profile for runtime actions | `normal` |
 | `JARVIS_PRIVACY_MODE` | Disable memory writes and tighten masking for sensitive sessions | `false` |
 | `JARVIS_OFFLINE_STT` | Enable offline speech recognition fallback | `1` |
-| `JARVIS_VOSK_MODEL_PATH` | Path to a local Vosk model | empty |
-| `JARVIS_LOCAL_LLM_URL` | Optional local LLM endpoint | empty |
-| `JARVIS_RELEASE_SIGNING_KEY` | HMAC signing key for release verification | empty |
-| `JARVIS_PLUGIN_SIGNING_KEY` | HMAC signing key for local plugin signing | empty |
-| `JARVIS_PLUGIN_SIGNING_KEYS` | Optional signer-to-key JSON for multiple plugin signers | empty |
-| `GROQ_API_KEY` | Optional AI command routing and summarization key | empty |
+| `JARVIS_VOSK_MODEL_PATH` | Path to a local Vosk model | Empty |
+| `JARVIS_LOCAL_LLM_URL` | Optional local LLM endpoint | Empty |
+| `JARVIS_RELEASE_SIGNING_KEY` | HMAC signing key for release verification | Empty |
+| `JARVIS_PLUGIN_SIGNING_KEY` | HMAC signing key for local plugin signing | Empty |
+| `JARVIS_PLUGIN_SIGNING_KEYS` | Optional signer-to-key JSON for multiple plugin signers | Empty |
+| `GROQ_API_KEY` | Optional AI command routing and summarization key | Empty |
 | `JARVIS_ENABLE_SPOTIFY` | Explicitly enable optional Spotify controls | `false` in `.env.example` |
-| `SPOTIFY_CLIENT_ID` | Optional Spotify API client ID | empty |
-| `SPOTIFY_CLIENT_SECRET` | Optional Spotify API client secret | empty |
+| `SPOTIFY_CLIENT_ID` | Optional Spotify API client ID | Empty |
+| `SPOTIFY_CLIENT_SECRET` | Optional Spotify API client secret | Empty |
 | `SPOTIFY_REDIRECT_URI` | Spotify callback URI | `http://127.0.0.1:8888/callback` |
-| `GEMINI_API_KEY` | Optional future Gemini integration | empty |
+| `GEMINI_API_KEY` | Optional future Gemini integration | Empty |
 
 ---
 
 ## Notes
 
-- J.A.R.V.I.S works without Spotify credentials; only Spotify features stay unavailable.
-- J.A.R.V.I.S works without Groq credentials for local-rule commands.
-- Groq cloud fallback is opt-in and remains disabled until provider settings and environment credentials permit it.
+- Open.Jarvis works without Spotify credentials; only Spotify features stay unavailable.
+- Open.Jarvis works without Groq credentials for local-rule commands.
 - Gemini is optional and currently reserved for future vision workflows.
 - Desktop automation is Windows-first.
 - Voice quality depends on microphone hardware and room noise.
