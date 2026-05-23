@@ -49,6 +49,13 @@ class SpyCloudProvider:
         )()
 
 
+class FailingProvider:
+    name = "failing"
+
+    def analyze(self, _request):
+        raise RuntimeError("bad api key sk-real-looking-secret")
+
+
 class ProviderSystemTests(unittest.TestCase):
     def _manager(self, root: Path, **settings) -> ConfigManager:
         manager = ConfigManager(paths=ConfigPaths(config_dir=root, settings_file=root / "settings.json"), env={})
@@ -232,6 +239,53 @@ class ProviderSystemTests(unittest.TestCase):
 
         self.assertFalse(response.ok)
         self.assertNotIn("sk-real-looking-secret", response.error)
+
+    def test_router_converts_local_provider_exception_to_safe_failure(self):
+        with TemporaryDirectory() as tmp:
+            router = ProviderRouter(
+                config_manager=self._manager(Path(tmp)),
+                local_provider=FailingProvider(),
+                cloud_provider=SpyCloudProvider(),
+            )
+
+            response = router.route("compose a haiku about release gates")
+
+            self.assertFalse(response.ok)
+            self.assertEqual(response.status, "unsupported")
+            self.assertEqual(response.error, "local_provider_error")
+            self.assertNotIn("sk-real-looking-secret", repr(response))
+
+    def test_router_converts_cloud_provider_exception_to_safe_failure(self):
+        with TemporaryDirectory() as tmp:
+            manager = self._manager(
+                Path(tmp),
+                **{
+                    "ai.cloud_fallback_enabled": True,
+                    "ai.groq_enabled": True,
+                    "ai.cloud_provider": "groq",
+                },
+            )
+            router = ProviderRouter(config_manager=manager, cloud_provider=FailingProvider())
+
+            response = router.route("compose a haiku about release gates")
+
+            self.assertFalse(response.ok)
+            self.assertEqual(response.status, "error")
+            self.assertEqual(response.error, "provider_error")
+            self.assertTrue(response.fallback_used)
+            self.assertNotIn("sk-real-looking-secret", repr(response))
+
+    def test_groq_provider_client_factory_exception_returns_safe_failure(self):
+        def failing_factory(_api_key):
+            raise RuntimeError("bad api key sk-real-looking-secret")
+
+        provider = GroqProvider(client_factory=failing_factory, enabled=True, api_key="sk-real-looking-secret")
+
+        response = provider.analyze(ProviderRequest(command="hello", allow_cloud=True))
+
+        self.assertFalse(response.ok)
+        self.assertEqual(response.error, "provider_auth_failed")
+        self.assertNotIn("sk-real-looking-secret", repr(response))
 
 
 if __name__ == "__main__":

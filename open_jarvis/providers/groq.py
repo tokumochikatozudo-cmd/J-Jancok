@@ -103,7 +103,10 @@ class GroqProvider:
         if is_groq_cooling_down():
             return ProviderResponse(provider=self.name, status="error", action=rate_limit_action(), error="rate_limited")
 
-        active_client = self._client()
+        try:
+            active_client = self._client()
+        except (RuntimeError, ValueError, TypeError, AttributeError, OSError) as exc:
+            return ProviderResponse(provider=self.name, status="error", error=safe_provider_error(exc))
         if active_client is None:
             return ProviderResponse(provider=self.name, status="unavailable", error="Groq client is unavailable.")
 
@@ -136,7 +139,10 @@ class GroqProvider:
     def summarize(self, text: str) -> ProviderResponse:
         if not self.enabled or not self.api_key:
             return ProviderResponse(provider=self.name, status="unavailable", error="Groq provider is unavailable.")
-        active_client = self._client()
+        try:
+            active_client = self._client()
+        except (RuntimeError, ValueError, TypeError, AttributeError, OSError) as exc:
+            return ProviderResponse(provider=self.name, status="error", error=safe_provider_error(exc))
         if active_client is None:
             return ProviderResponse(provider=self.name, status="unavailable", error="Groq client is unavailable.")
         try:

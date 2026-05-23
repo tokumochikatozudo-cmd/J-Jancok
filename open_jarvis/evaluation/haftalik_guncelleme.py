@@ -10,6 +10,7 @@ import requests
 from dotenv import load_dotenv
 from groq import Groq, GroqError
 
+from open_jarvis.providers.groq import safe_provider_error
 from open_jarvis.utils.jarvis_logging import get_logger
 
 logger = get_logger("weekly_update")
@@ -113,9 +114,10 @@ Write in English. Be practical and realistic.
             max_tokens=1500,
         )
         return response.choices[0].message.content or "Groq returned an empty analysis."
-    except (GroqError, AttributeError) as exc:
-        logger.exception("Weekly report Groq error: %s", exc)
-        return f"Groq error: {exc}"
+    except (GroqError, AttributeError, RuntimeError, OSError, ValueError) as exc:
+        error = safe_provider_error(exc)
+        logger.warning("Weekly report Groq error: %s", error)
+        return f"Groq analysis failed: {error}"
 
 
 def _desktop_path() -> Path:
