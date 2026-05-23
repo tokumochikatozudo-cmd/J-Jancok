@@ -44,6 +44,7 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 - Added v0.6.0 configuration foundations: typed non-secret settings schema, ConfigManager, user-local and portable-aware paths, validation diagnostics, safe export, environment compatibility bridge, and Settings UI model.
 - Added release-safety coverage to keep real `config/settings.json` files out of source and portable packages.
 - Added v0.7.0 memory privacy and data controls for masked listing/viewing, explicit note deletion, clear, and masked JSON export flows.
+- Added v0.8.0 provider routing foundations with a local-first provider, isolated Groq provider adapter, explicit cloud fallback control, and provider privacy tests.
 
 ### Changed
 
@@ -79,6 +80,7 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 - Kept portable packaging additive to the source workflow and documented full installer support as future work.
 - Updated the Settings UI path so non-secret preferences save through ConfigManager instead of writing raw `.env` files.
 - Connected normal note, habit, and preference writes to ConfigManager privacy flags so privacy mode can stop new persistent memory collection.
+- Changed AI fallback defaults so local routing remains first and Groq cloud fallback stays off unless explicitly enabled in non-secret settings and environment configuration.
 
 ### Verified
 

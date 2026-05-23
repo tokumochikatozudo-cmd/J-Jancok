@@ -33,10 +33,27 @@ HYGIENE_ITEMS = (
     HygieneItem("logs", "runtime log directory"),
     HygieneItem("memory.json", "local assistant memory data"),
     HygieneItem("config/settings.json", "local user settings file"),
+    HygieneItem("provider_cache", "provider runtime cache"),
+    HygieneItem("provider_state", "provider runtime state"),
+    HygieneItem("groq_cache", "Groq provider cache"),
     HygieneItem("release", "generated release metadata directory"),
 )
 
-SKIP_DIRS = {".git", ".mypy_cache", ".pytest_cache", ".ruff_cache", "__pycache__", "build", "dist", "exports", "logs", "release"}
+SKIP_DIRS = {
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "__pycache__",
+    "build",
+    "dist",
+    "exports",
+    "groq_cache",
+    "logs",
+    "provider_cache",
+    "provider_state",
+    "release",
+}
 SKIP_SUFFIXES = {
     ".bmp",
     ".db",
@@ -161,6 +178,8 @@ def find_hygiene_items(root: str | Path = ".", *, include_secrets: bool = True) 
         relative = cache_dir.relative_to(root_path).as_posix()
         if relative != "__pycache__":
             found.append(HygieneItem(relative, "nested python bytecode cache"))
+    for provider_path in root_path.rglob(".provider*"):
+        found.append(HygieneItem(provider_path.relative_to(root_path).as_posix(), "provider runtime state"))
     for pyc_path in root_path.rglob("*.pyc"):
         found.append(HygieneItem(pyc_path.relative_to(root_path).as_posix(), "python bytecode file"))
     for artifact_pattern, reason in {

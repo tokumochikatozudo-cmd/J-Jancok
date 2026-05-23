@@ -37,7 +37,7 @@ def emit_startup_readiness(
     """Send one startup readiness snapshot to the UI without blocking runtime startup."""
 
     values = resolved_env(os.environ) if env is None else env
-    groq_enabled = _env_flag_enabled(values, "JARVIS_ENABLE_GROQ", default=True)
+    groq_enabled = _env_flag_enabled(values, "JARVIS_ENABLE_GROQ", default=False)
     spotify_enabled = _env_flag_enabled(values, "JARVIS_ENABLE_SPOTIFY", default=True)
     groq_ready = groq_enabled and bool(values.get("GROQ_API_KEY"))
     spotify_ready = spotify_enabled and bool(values.get("SPOTIFY_CLIENT_ID") and values.get("SPOTIFY_CLIENT_SECRET"))

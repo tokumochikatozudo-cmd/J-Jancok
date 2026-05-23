@@ -660,6 +660,14 @@ Open.Jarvis v0.7.0 builds on the settings system with local memory privacy contr
 
 Memory exports are masked JSON snapshots intended for a user-selected private path. They mask secret-like assignments and sensitive preference keys, but notes and habits can still be personal data. Do not commit exports, `memory.json`, `config/settings.json`, logs, or other private runtime files.
 
+### Provider System And AI Fallback Control
+
+Open.Jarvis v0.8.0 routes AI-style command analysis through a local-first provider system. The local provider uses deterministic command rules and requires no network or API key. Groq remains optional and is isolated behind an explicit provider adapter.
+
+Cloud fallback is disabled by default. Groq is called only when local routing cannot handle a command and non-secret settings explicitly enable cloud fallback, Groq, and the Groq cloud provider. A configured `GROQ_API_KEY` alone does not make cloud fallback mandatory.
+
+Provider prompts use the existing memory privacy gate. When `privacy.privacy_mode` is enabled or `privacy.memory_enabled` is disabled, persisted notes, preferences, and habits are not attached to provider prompts. If cloud fallback is enabled, command text may be sent to the selected cloud provider; Open.Jarvis does not claim encryption or that cloud providers never receive data.
+
 | Setting | Purpose | Safe default |
 | --- | --- | --- |
 | `JARVIS_AI_MODE` | AI routing mode: `auto`, `free_cloud`, `offline`, or `rules` | `auto` |
@@ -703,6 +711,7 @@ Memory exports are masked JSON snapshots intended for a user-selected private pa
 
 - J.A.R.V.I.S works without Spotify credentials; only Spotify features stay unavailable.
 - J.A.R.V.I.S works without Groq credentials for local-rule commands.
+- Groq cloud fallback is opt-in and remains disabled until provider settings and environment credentials permit it.
 - Gemini is optional and currently reserved for future vision workflows.
 - Desktop automation is Windows-first.
 - Voice quality depends on microphone hardware and room noise.

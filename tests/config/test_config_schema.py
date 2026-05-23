@@ -11,6 +11,9 @@ class ConfigSchemaTests(unittest.TestCase):
         self.assertEqual(config["general"]["theme"], "system")
         self.assertEqual(config["ai"]["mode"], "auto")
         self.assertFalse(config["ai"]["groq_enabled"])
+        self.assertFalse(config["ai"]["cloud_fallback_enabled"])
+        self.assertTrue(config["ai"]["local_provider_enabled"])
+        self.assertEqual(config["ai"]["cloud_provider"], "none")
         self.assertEqual(config["voice"]["wake_word"], "jarvis")
         self.assertTrue(config["voice"]["voice_enabled"])
         self.assertTrue(config["voice"]["offline_stt_enabled"])
@@ -24,6 +27,7 @@ class ConfigSchemaTests(unittest.TestCase):
         self.assertEqual(ai_mode.value_type, "string")
         self.assertEqual(ai_mode.env_var, "JARVIS_AI_MODE")
         self.assertEqual(ai_mode.allowed_values, ("auto", "free_cloud", "offline", "rules", "local", "cloud"))
+        self.assertEqual(get_field("ai.cloud_provider").allowed_values, ("none", "groq"))
         self.assertEqual(permission.allowed_values, ("safe", "normal", "admin"))
 
     def test_secret_fields_are_not_configurable_settings(self):

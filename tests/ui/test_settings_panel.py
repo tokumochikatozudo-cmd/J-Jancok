@@ -12,7 +12,14 @@ class SettingsPanelViewModelTests(unittest.TestCase):
         model = build_settings_view_model(
             config={
                 "general": {"theme": "system", "language": "en", "debug_mode": False, "start_minimized": False},
-                "ai": {"mode": "auto", "groq_enabled": False, "local_llm_url": "", "cloud_fallback_enabled": True},
+                "ai": {
+                    "mode": "auto",
+                    "groq_enabled": False,
+                    "local_provider_enabled": True,
+                    "cloud_provider": "none",
+                    "local_llm_url": "",
+                    "cloud_fallback_enabled": False,
+                },
                 "voice": {"voice_enabled": True, "wake_word": "jarvis"},
                 "spotify": {"enabled": False, "redirect_uri": "http://127.0.0.1:8888/callback"},
             },

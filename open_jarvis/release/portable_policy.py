@@ -21,6 +21,8 @@ DENIED_PARTS = {
     "dist",
     "exports",
     "logs",
+    "provider_cache",
+    "provider_state",
     "release",
     "temp",
     "tmp",
@@ -76,6 +78,8 @@ def is_denied_portable_path(path: str, *, app_name: str = DEFAULT_APP_NAME) -> d
 
     if "logs" in parts_lower or suffix == ".log":
         return {"denied": True, "reason": "log files are not allowed"}
+    if any(part.startswith(".provider") for part in parts_lower) or "groq_cache" in parts_lower:
+        return {"denied": True, "reason": "provider runtime state is not allowed"}
     if parts_lower & DENIED_PARTS:
         return {"denied": True, "reason": "generated or private directory is not allowed"}
     if name_lower == ".env" or (name_lower.endswith(".env") and name_lower != ".env.example"):
