@@ -45,12 +45,12 @@ Do not publish exploit details in a public issue. Create a private report or con
 
 ## Supported versions
 
-The current stable release line starts with `v1.0.0` once tagged and published. Until that tag is created, use the latest published tag plus the current `main` branch audit result to determine support status.
+The current stable release line starts with the published `v1.0.0` release. Use the GitHub Releases page plus the current `main` branch audit result to determine the newest support status.
 
 | Version line | Status |
 | --- | --- |
-| `v1.0.x` | Stable line once `v1.0.0` is tagged |
-| `v0.9.x` | Security-hardening baseline until `v1.0.0` is published |
+| `v1.0.x` | Stable release line |
+| `v0.9.x` | Security-hardening baseline carried into v1.0.0 |
 | Older `v0.x` | Historical releases |
 
 ## Secure development checklist

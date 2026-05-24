@@ -144,6 +144,8 @@ class ProjectQualityFilesTests(unittest.TestCase):
         self.assertIn("not an encrypted vault", readme)
         self.assertIn("not a signed installer distribution", readme)
         self.assertNotIn("Open.Jarvis is a pre-1.0", readme)
+        self.assertNotIn("main` is being prepared for `v1.0.0", readme)
+        self.assertNotIn("before the `v1.0.0` stable release", readme)
 
     def test_public_ui_text_is_english_and_not_mojibake(self):
         files = [

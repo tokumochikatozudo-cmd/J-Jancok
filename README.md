@@ -14,16 +14,17 @@ Latest published release:
 
 | Version | Focus |
 |---|---|
+| `v1.0.0` | Stable release |
 | `v0.9.0` | Security hardening |
 | `v0.8.1` | Provider fallback safety hardening |
 | `v0.8.0` | Provider system and AI fallback control |
 | `v0.7.0` | Memory privacy and data control |
 
-`v0.9.0` hardens runtime safety, command/process execution, path validation, URL safety, plugin entrypoint boundaries, and release artifact protection before the `v1.0.0` stable release.
+`v1.0.0` is the first stable release milestone for Open.Jarvis. It finalizes public-facing documentation, version metadata, validation posture, release readiness checks, known limitations, and stable usage guidance.
 
-`main` is being prepared for `v1.0.0` as the first stable release line. The stable release target is documentation consistency, reproducible local validation, conservative security posture, and source-release readiness rather than a new cloud dependency or installer claim.
+`v0.9.0` remains the previous Security Hardening release and covers runtime safety, command/process execution, path validation, URL safety, plugin entrypoint boundaries, and release artifact protection.
 
-The GitHub Releases page is the source of truth for published release artifacts. The `main` branch may document features that are already merged but not yet included in a formal GitHub Release.
+The GitHub Releases page is the source of truth for published release artifacts. The `main` branch may document maintenance updates after the latest formal release.
 
 ---
 
@@ -48,7 +49,7 @@ The GitHub Releases page is the source of truth for published release artifacts.
 
 ## Highlights
 
-- v1.0.0 stable-release readiness posture
+- v1.0.0 stable-release posture
 - Voice and text command input
 - Local-first command routing
 - Optional Groq AI fallback
@@ -165,7 +166,7 @@ When privacy mode is enabled or memory is disabled, persisted memory context is 
 
 ## v0.9.0 Security Hardening
 
-`v0.9.0` is focused on public-release security hardening before `v1.0.0`.
+`v0.9.0` focused on public-release security hardening and remains the security baseline carried into `v1.0.0`.
 
 ### Command And Process Safety
 
@@ -283,9 +284,9 @@ Open.Jarvis includes multiple local quality and release-safety tools:
 
 ---
 
-## v1.0.0 Stable Release Readiness
+## v1.0.0 Stable Release
 
-`v1.0.0` is the first stable release target for Open.Jarvis.
+`v1.0.0` is the first stable published release for Open.Jarvis.
 
 Stable means:
 
@@ -575,7 +576,7 @@ python -m ruff check .
 python -m pytest
 ```
 
-v0.9.0 validation included:
+v1.0.0 validation includes:
 
 ```text
 python scripts/public_release_check.py -> PASS
@@ -585,7 +586,7 @@ python -m pytest tests/release -q -> 19 passed, 14 subtests passed
 python -m pytest tests/test_provider_system.py -q -> 15 passed, 2 warnings
 python -m pytest tests/test_memory_privacy_controls.py -q -> 7 passed, 2 warnings
 python -m ruff check . -> PASS
-python -m pytest -> 384 passed, 2 warnings
+python -m pytest -> 385 passed, 2 warnings
 python project_audit.py -> no static findings
 CLI/help/dry-run smoke -> PASS
 secret/runtime scan -> clean after approved hygiene cleanup
@@ -656,7 +657,7 @@ See `SECURITY.md` for the full security policy.
 
 | Version | Summary |
 |---|---|
-| `v1.0.0` | Stable release readiness, documentation consistency, version metadata alignment, and release-quality posture |
+| `v1.0.0` | Stable release, documentation consistency, version metadata alignment, and release-quality posture |
 | `v0.9.0` | Security hardening for runtime, command/process, path, URL, plugin, and release safety |
 | `v0.8.1` | Provider fallback safety hardening |
 | `v0.8.0` | Local-first provider system and AI fallback control |
@@ -710,6 +711,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Disclaimer
 
-Open.Jarvis is a local-first desktop assistant with a stable public release target. It is designed for safer defaults, but it is not a full sandbox, not an encrypted vault, and not a signed installer distribution.
+Open.Jarvis is a local-first desktop assistant with a published stable release line. It is designed for safer defaults, but it is not a full sandbox, not an encrypted vault, and not a signed installer distribution.
 
 Use optional cloud providers only when you understand that prompt text may be sent to the configured provider.

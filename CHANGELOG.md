@@ -2,7 +2,7 @@
 
 All notable changes to J.A.R.V.I.S will be documented in this file.
 
-The format follows Keep a Changelog, and this project uses semantic versioning once tagged releases begin.
+The format follows Keep a Changelog, and this project uses semantic versioning for tagged releases.
 
 ## Unreleased
 
@@ -15,8 +15,8 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 
 ### Changed
 
-- Aligned package metadata and CLI version output with the `1.0.0` stable release target.
-- Updated README, SECURITY, and CONTRIBUTING guidance for stable public release preparation while preserving v0.9.0 security hardening language.
+- Aligned package metadata and CLI version output with the `1.0.0` stable release.
+- Updated README, SECURITY, and CONTRIBUTING guidance for stable public release readiness while preserving v0.9.0 security hardening language.
 
 ### Verified
 
