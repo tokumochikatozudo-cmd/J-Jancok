@@ -15,6 +15,8 @@ python -m ruff format --check .
 python -m mypy .
 python -m compileall .
 python project_audit.py
+python repo_hygiene.py
+python scripts/public_release_check.py
 python kontrol.py --no-pause
 python -m pip check
 ```
@@ -27,6 +29,8 @@ python -m pip check
 - Prefer small domain modules over growing large files.
 - Use actionable errors: explain why something failed and what to do next.
 - Update README or docs when behavior changes.
+- Keep README release-contract sections intact: Product Feature Modules, Easy Roadmap Complete, Current Next Roadmap, and Compared With Other Jarvis Projects.
+- Keep stable-release docs conservative; do not claim full OS sandboxing, encrypted vault storage, signed installer guarantees, or cloud privacy guarantees beyond the implemented controls.
 
 ## Pull request checklist
 
@@ -34,3 +38,4 @@ python -m pip check
 - Health check still runs.
 - Feature quality notes are updated when a core feature changes.
 - Security impact is documented for desktop, plugin, file, network, or credential changes.
+- Public release checks and repo hygiene pass before publication.

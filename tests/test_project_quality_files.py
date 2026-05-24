@@ -36,6 +36,7 @@ class ProjectQualityFilesTests(unittest.TestCase):
     def test_pyproject_defines_ruff_quality_defaults(self):
         content = Path("pyproject.toml").read_text(encoding="utf-8")
 
+        self.assertIn('version = "1.0.0"', content)
         self.assertIn("[tool.ruff]", content)
         self.assertIn("target-version", content)
         self.assertIn("[tool.coverage.run]", content)
@@ -125,6 +126,24 @@ class ProjectQualityFilesTests(unittest.TestCase):
         self.assertIn("Compared With Other Jarvis Projects", content)
         self.assertIn("Easy Roadmap Complete", content)
         self.assertIn("Current Next Roadmap", content)
+
+    def test_stable_release_docs_are_consistent_and_conservative(self):
+        readme = Path("README.md").read_text(encoding="utf-8")
+        changelog = Path("CHANGELOG.md").read_text(encoding="utf-8")
+        security = Path("SECURITY.md").read_text(encoding="utf-8")
+        stable = Path("docs/STABLE_RELEASE.md").read_text(encoding="utf-8")
+        app_main = Path("open_jarvis/app/main.py").read_text(encoding="utf-8")
+
+        for content in (readme, changelog, security, stable):
+            self.assertIn("v1.0.0", content)
+
+        self.assertIn("Stable Release Readiness", stable)
+        self.assertIn("Open J.A.R.V.I.S 1.0.0", app_main)
+        self.assertIn("cloud-never-receives-data", stable)
+        self.assertIn("not a full sandbox", readme)
+        self.assertIn("not an encrypted vault", readme)
+        self.assertIn("not a signed installer distribution", readme)
+        self.assertNotIn("Open.Jarvis is a pre-1.0", readme)
 
     def test_public_ui_text_is_english_and_not_mojibake(self):
         files = [

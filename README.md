@@ -21,6 +21,8 @@ Latest published release:
 
 `v0.9.0` hardens runtime safety, command/process execution, path validation, URL safety, plugin entrypoint boundaries, and release artifact protection before the `v1.0.0` stable release.
 
+`main` is being prepared for `v1.0.0` as the first stable release line. The stable release target is documentation consistency, reproducible local validation, conservative security posture, and source-release readiness rather than a new cloud dependency or installer claim.
+
 The GitHub Releases page is the source of truth for published release artifacts. The `main` branch may document features that are already merged but not yet included in a formal GitHub Release.
 
 ---
@@ -46,6 +48,7 @@ The GitHub Releases page is the source of truth for published release artifacts.
 
 ## Highlights
 
+- v1.0.0 stable-release readiness posture
 - Voice and text command input
 - Local-first command routing
 - Optional Groq AI fallback
@@ -277,6 +280,32 @@ Open.Jarvis includes multiple local quality and release-safety tools:
 - UI smoke tests
 - Screenshot regression checks
 - Source-release hygiene tooling
+
+---
+
+## v1.0.0 Stable Release Readiness
+
+`v1.0.0` is the first stable release target for Open.Jarvis.
+
+Stable means:
+
+- public README, changelog, security policy, and contributing guide are aligned
+- install, run, validation, and release workflow instructions are clear
+- local-first provider defaults and keyless degraded mode are documented
+- memory privacy and provider fallback safety remain covered by tests
+- v0.9.0 command, path, URL, plugin, and artifact hardening remains in force
+- public release, hygiene, audit, Ruff, unittest, pytest, release, and security gates pass locally
+- generated artifacts, local settings, memory files, logs, caches, and secrets remain blocked from source releases
+- known limitations are explicit instead of hidden behind marketing language
+
+Stable does not mean:
+
+- full OS-level sandboxing
+- encrypted vault storage
+- a signed Windows installer
+- guaranteed safe arbitrary command execution
+- mandatory Groq or cloud provider use
+- a promise that cloud providers never receive prompt text when cloud fallback is explicitly enabled
 
 ---
 
@@ -627,6 +656,7 @@ See `SECURITY.md` for the full security policy.
 
 | Version | Summary |
 |---|---|
+| `v1.0.0` | Stable release readiness, documentation consistency, version metadata alignment, and release-quality posture |
 | `v0.9.0` | Security hardening for runtime, command/process, path, URL, plugin, and release safety |
 | `v0.8.1` | Provider fallback safety hardening |
 | `v0.8.0` | Local-first provider system and AI fallback control |
@@ -680,6 +710,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Disclaimer
 
-Open.Jarvis is a pre-1.0 desktop assistant project. It is designed for local-first operation and safer defaults, but it is not a full sandbox, not an encrypted vault, and not a signed installer distribution.
+Open.Jarvis is a local-first desktop assistant with a stable public release target. It is designed for safer defaults, but it is not a full sandbox, not an encrypted vault, and not a signed installer distribution.
 
 Use optional cloud providers only when you understand that prompt text may be sent to the configured provider.

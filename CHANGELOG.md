@@ -6,6 +6,22 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 
 ## Unreleased
 
+## v1.0.0 - Stable Release
+
+### Added
+
+- Added stable release readiness documentation for the first `v1.0.0` release line.
+- Added explicit stable-release scope and limitations so public docs do not overclaim sandboxing, encryption, installer signing, or cloud privacy behavior.
+
+### Changed
+
+- Aligned package metadata and CLI version output with the `1.0.0` stable release target.
+- Updated README, SECURITY, and CONTRIBUTING guidance for stable public release preparation while preserving v0.9.0 security hardening language.
+
+### Verified
+
+- Stable readiness is covered by README/version contract tests, release checks, hygiene checks, security tests, provider tests, memory privacy tests, Ruff, unittest, pytest, and CI-equivalent smoke commands.
+
 ### Added
 
 - Added an MIT license for public open-source distribution.

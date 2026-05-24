@@ -17,7 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.version:
-        print("Open J.A.R.V.I.S 0.2.0")
+        print("Open J.A.R.V.I.S 1.0.0")
         return 0
     start_jarvis()
     return 0

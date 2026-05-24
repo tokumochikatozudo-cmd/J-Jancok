@@ -45,7 +45,13 @@ Do not publish exploit details in a public issue. Create a private report or con
 
 ## Supported versions
 
-This project is pre-release. Treat the current main workspace as the only supported development version until tagged releases are published.
+The current stable release line starts with `v1.0.0` once tagged and published. Until that tag is created, use the latest published tag plus the current `main` branch audit result to determine support status.
+
+| Version line | Status |
+| --- | --- |
+| `v1.0.x` | Stable line once `v1.0.0` is tagged |
+| `v0.9.x` | Security-hardening baseline until `v1.0.0` is published |
+| Older `v0.x` | Historical releases |
 
 ## Secure development checklist
 
