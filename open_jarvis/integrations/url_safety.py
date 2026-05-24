@@ -5,6 +5,8 @@ from __future__ import annotations
 from urllib.parse import quote_plus, urlparse
 
 ALLOWED_WEB_SCHEMES = {"http", "https"}
+BLOCKED_URL_PREFIXES = ("\\\\", "//")
+BLOCKED_URL_FRAGMENTS = ("\\",)
 
 
 def normalize_web_url(url: str) -> str | None:
@@ -12,6 +14,8 @@ def normalize_web_url(url: str) -> str | None:
 
     value = (url or "").strip()
     if not value:
+        return None
+    if value.startswith(BLOCKED_URL_PREFIXES) or any(fragment in value for fragment in BLOCKED_URL_FRAGMENTS):
         return None
 
     parsed = urlparse(value)

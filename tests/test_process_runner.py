@@ -13,9 +13,16 @@ class ProcessRunnerTests(unittest.TestCase):
 
     def test_run_command_disables_shell_by_default(self):
         with patch("open_jarvis.runtime.process_runner.subprocess.run") as run_mock:
-            run_command(["shutdown", "/s", "/t", "5"])
+            run_command(["rundll32.exe", "user32.dll,LockWorkStation"])
 
-        run_mock.assert_called_once_with(["shutdown", "/s", "/t", "5"], check=False, shell=False)
+        run_mock.assert_called_once_with(["rundll32.exe", "user32.dll,LockWorkStation"], check=False, shell=False)
+
+    def test_run_command_rejects_shutdown_without_destructive_approval(self):
+        with patch("open_jarvis.runtime.process_runner.subprocess.run") as run_mock:
+            with self.assertRaises(ValueError):
+                run_command(["shutdown", "/s", "/t", "5"])
+
+        run_mock.assert_not_called()
 
 
 if __name__ == "__main__":

@@ -45,6 +45,7 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 - Added release-safety coverage to keep real `config/settings.json` files out of source and portable packages.
 - Added v0.7.0 memory privacy and data controls for masked listing/viewing, explicit note deletion, clear, and masked JSON export flows.
 - Added v0.8.0 provider routing foundations with a local-first provider, isolated Groq provider adapter, explicit cloud fallback control, and provider privacy tests.
+- Added v0.9.0 security hardening helpers for process command validation, scoped path checks, stricter URL rejection, plugin loader entrypoint boundaries, and plugin/runtime artifact coverage.
 
 ### Changed
 
@@ -81,6 +82,8 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 - Updated the Settings UI path so non-secret preferences save through ConfigManager instead of writing raw `.env` files.
 - Connected normal note, habit, and preference writes to ConfigManager privacy flags so privacy mode can stop new persistent memory collection.
 - Changed AI fallback defaults so local routing remains first and Groq cloud fallback stays off unless explicitly enabled in non-secret settings and environment configuration.
+- Hardened runtime process helpers to keep `shell=False` while blocking destructive executables, shell execution flags, and pipe-to-shell command patterns unless a guarded runtime action explicitly permits them.
+- Hardened release hygiene and portable policy coverage for plugin cache/state artifacts alongside provider cache/state artifacts.
 
 ### Verified
 
@@ -88,4 +91,5 @@ The format follows Keep a Changelog, and this project uses semantic versioning o
 - Plugin coverage now includes manifest validation, permission boundaries, safe context behavior, registry discovery, loader isolation, lifecycle hooks, and security-boundary tests.
 - Voice coverage now uses mocked microphone, wake-word, push-to-talk, TTS, and controller flows without requiring real audio hardware.
 - Portable release coverage now verifies artifact layout, dry-run behavior, include rules, private-data exclusions, folder checks, and ZIP traversal rejection without running PyInstaller.
+- Security coverage now includes command/process safety, path traversal, unsafe URL protocols, plugin entrypoint boundaries, and plugin/provider runtime artifact blockers.
 - Unit tests, Ruff linting, project audit, health check, and feature quality checks are used as the current quality gate.

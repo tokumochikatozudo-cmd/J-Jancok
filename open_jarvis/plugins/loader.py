@@ -10,6 +10,7 @@ from typing import Any
 from open_jarvis.plugins.context import PluginContext, build_plugin_context
 from open_jarvis.plugins.errors import PluginLoadError, PluginRuntimeError
 from open_jarvis.plugins.lifecycle import available_hooks, build_hook_result
+from open_jarvis.security.path_safety import validate_path_within_root
 
 PLUGIN_FAILURE_EXCEPTIONS = (Exception,)
 
@@ -50,7 +51,10 @@ def load_plugin(entry: dict[str, Any], *, logger: Any = None) -> dict[str, Any]:
 
     manifest = entry.get("manifest", {})
     plugin_dir = Path(str(entry.get("path", "")))
-    entrypoint = (plugin_dir / str(manifest.get("entrypoint", ""))).resolve()
+    entrypoint_result = validate_path_within_root(plugin_dir, str(manifest.get("entrypoint", "")), allow_private=True)
+    if not entrypoint_result.allowed or entrypoint_result.resolved is None:
+        return {"id": plugin_id, "status": "blocked", "issues": [entrypoint_result.reason or "invalid plugin entrypoint"], "hooks": []}
+    entrypoint = entrypoint_result.resolved
     context = build_plugin_context(plugin_id, plugin_dir, list(entry.get("permissions", [])), logger=logger)
     try:
         module = _import_plugin_module(plugin_id, entrypoint)

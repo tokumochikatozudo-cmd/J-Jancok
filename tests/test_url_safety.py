@@ -21,6 +21,7 @@ class UrlSafetyTests(unittest.TestCase):
     def test_normalize_web_url_rejects_unsafe_schemes(self):
         self.assertIsNone(normalize_web_url("javascript:alert(1)"))
         self.assertIsNone(normalize_web_url("file:///C:/Windows/System32"))
+        self.assertIsNone(normalize_web_url("\\\\server\\share"))
 
     def test_open_web_blocks_unsafe_url(self):
         spoken = []

@@ -7,8 +7,11 @@ Open.Jarvis can listen to voice commands, open applications, control the desktop
 ## Current safety defaults
 
 - Destructive runtime actions are blocked unless `JARVIS_ALLOW_DESTRUCTIVE_ACTIONS=true`.
+- Process helpers run with `shell=False` and reject shell strings, shell execution flags, and obvious destructive command executables by default.
 - Browser navigation is limited to `http` and `https` URLs.
+- File/path safety helpers reject traversal outside an allowed root and identify private runtime paths such as memory, settings, logs, provider state, and plugin state.
 - Plugin manifests must keep entrypoints inside the plugin directory.
+- Plugin loader entrypoints are rechecked at load time so malformed registry entries cannot import files outside the plugin directory.
 - Plugin discovery must not execute plugin code.
 - Plugin permissions are deny-by-default for unknown, high-risk, and critical capabilities.
 - Privacy mode can disable normal memory collection writes and mask secret-like values in memory views and exports.
@@ -53,7 +56,7 @@ This project is pre-release. Treat the current main workspace as the only suppor
 - Never commit `.env`, API keys, tokens, generated secrets, or local user data.
 - Never commit real `config/settings.json` files from source or portable runs.
 - Never commit `memory.json` or user-selected memory export files from local data-control flows.
-- Never commit provider runtime state or cache directories such as `provider_cache/`, `provider_state/`, `.provider*`, or `groq_cache/`.
+- Never commit provider or plugin runtime state or cache directories such as `provider_cache/`, `provider_state/`, `.provider*`, `plugin_cache/`, `plugin_state/`, `.plugin*`, or `groq_cache/`.
 - Prefer allowlists over blocklists for commands, plugins, and URLs.
 - Add negative tests for plugin permissions, broken plugin hooks, and invalid manifests.
 
@@ -61,4 +64,5 @@ This project is pre-release. Treat the current main workspace as the only suppor
 
 - Support for user-modified plugins that bypass the trust policy.
 - Systems running with intentionally disabled safety gates.
+- Full OS-level sandboxing, kernel isolation, encrypted vault storage, and signed installer guarantees unless a future release explicitly implements them.
 - Secrets leaked outside the repository by local tools or shell history.

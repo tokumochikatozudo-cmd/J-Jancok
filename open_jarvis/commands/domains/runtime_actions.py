@@ -303,11 +303,11 @@ def handle_runtime_action(action: str, params: dict, context: dict) -> bool | No
         return True
 
     if action == "shutdown":
-        run_command(["shutdown", "/s", "/t", "5"])
+        run_command(["shutdown", "/s", "/t", "5"], allow_destructive=True)
         return False
 
     if action == "restart":
-        run_command(["shutdown", "/r", "/t", "5"])
+        run_command(["shutdown", "/r", "/t", "5"], allow_destructive=True)
         return False
 
     return None

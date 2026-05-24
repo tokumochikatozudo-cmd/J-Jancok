@@ -568,12 +568,14 @@ Safety controls include:
 
 - `JARVIS_ALLOW_DESTRUCTIVE_ACTIONS=false` by default
 - `JARVIS_PERMISSION_PROFILE=normal` by default
+- shell-free process helpers with guard rails for destructive executables, shell execution flags, and pipe-to-shell command patterns
 - URL normalization that only allows HTTP and HTTPS browser links
 - Plugin path traversal checks
 - Plugin signature verification
 - Provider boundary safety
 - Privacy mode for sensitive sessions
 - Secret masking before runtime event logs are written
+- Path safety helpers for scoped file operations and private runtime path detection
 
 Jarvis uses confirmation and permission controls where the action policy requires it.
 
@@ -637,6 +639,20 @@ python ui_screenshot_regression.py
 python public_release.py
 python feature_quality.py
 ```
+
+Current verified v0.9.0 hardening baseline:
+
+| Check | Current result |
+| --- | --- |
+| Unit tests | `384 passed` after v0.9.0 hardening |
+| Ruff | `All checks passed` |
+| Project audit | `No static findings detected` |
+| Repository hygiene | `PUBLIC RELEASE HYGIENE: PASS` after cleanup |
+| Public source release check | `PUBLIC SOURCE RELEASE CHECK: PASS` |
+| Public release readiness | `Ready: yes` |
+| UI smoke | `UI smoke: ok` |
+| UI screenshot regression | `dashboard`, `system`, `integrations`, and `security` passed |
+| Health status | No critical blockers in keyless mode, with expected warnings |
 
 Expected warnings in a fresh keyless setup:
 

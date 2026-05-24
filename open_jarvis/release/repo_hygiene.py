@@ -35,6 +35,8 @@ HYGIENE_ITEMS = (
     HygieneItem("config/settings.json", "local user settings file"),
     HygieneItem("provider_cache", "provider runtime cache"),
     HygieneItem("provider_state", "provider runtime state"),
+    HygieneItem("plugin_cache", "plugin runtime cache"),
+    HygieneItem("plugin_state", "plugin runtime state"),
     HygieneItem("groq_cache", "Groq provider cache"),
     HygieneItem("release", "generated release metadata directory"),
 )
@@ -52,6 +54,8 @@ SKIP_DIRS = {
     "logs",
     "provider_cache",
     "provider_state",
+    "plugin_cache",
+    "plugin_state",
     "release",
 }
 SKIP_SUFFIXES = {
@@ -180,6 +184,8 @@ def find_hygiene_items(root: str | Path = ".", *, include_secrets: bool = True) 
             found.append(HygieneItem(relative, "nested python bytecode cache"))
     for provider_path in root_path.rglob(".provider*"):
         found.append(HygieneItem(provider_path.relative_to(root_path).as_posix(), "provider runtime state"))
+    for plugin_path in root_path.rglob(".plugin*"):
+        found.append(HygieneItem(plugin_path.relative_to(root_path).as_posix(), "plugin runtime state"))
     for pyc_path in root_path.rglob("*.pyc"):
         found.append(HygieneItem(pyc_path.relative_to(root_path).as_posix(), "python bytecode file"))
     for artifact_pattern, reason in {
