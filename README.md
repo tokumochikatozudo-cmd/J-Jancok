@@ -280,6 +280,62 @@ Open.Jarvis includes multiple local quality and release-safety tools:
 
 ---
 
+## Product Feature Modules
+
+These modules are intentionally small, testable, and reusable from the desktop app.
+
+| Capability | Module or helper | What it covers |
+|---|---|---|
+| Onboarding checks | `onboarding_engine.py` | Keyless degraded-mode setup checks |
+| Permission profiles | `permission_profiles.py` | Safe, normal, and admin action policy |
+| UI theme | `ui_theme.py` | Shared cyber interface design tokens |
+| UI components | `ui_components.py` | Reusable desktop UI widgets |
+| UI smoke checks | `ui_smoke.py` | Headless-friendly UI import/render checks |
+| UI screenshot regression | `ui_screenshot_regression.py` | Visual regression capture planning |
+| Repository hygiene | `repo_hygiene.py` | Local-only file and generated-artifact scanning |
+| Plugin marketplace | `plugin_marketplace.py` | Local plugin catalog metadata |
+| Plugin signatures | `plugin_signature.py` | Plugin signing and verification helpers |
+| Plugin state audit | `plugin_state.py`, `build_plugin_state_audit` | Plugin trust and runtime state reporting |
+| Privacy mode | `privacy_mode.py` | Memory write/read suppression and secret masking |
+| Plugin subprocess runner | `plugin_runner.py` | Bounded plugin subprocess execution planning |
+| Offline profile | `offline_profile.py` | Optional offline-mode readiness metadata |
+| Evaluation suite | `evaluation_suite.py`, `eval_runner.py`, `eval_artifacts.py`, `compare_eval_artifacts` | Deterministic and measured eval reporting |
+| Release metadata | `release_build.py` | Signed release manifest metadata |
+| Model catalog | `model_installer.py`, `build_signed_model_catalog`, `verify_model_catalog`, `verify_model_checksum` | Signed optional model catalog verification |
+
+---
+
+## Easy Roadmap Complete
+
+- Public README, license, security policy, and contribution guidance are present.
+- Local-first command routing and provider fallback controls are implemented.
+- Memory privacy controls and masked memory export/list behavior are implemented.
+- Release hygiene, artifact verification, and public source checks are implemented.
+- v0.9.0 security hardening covers process, path, URL, plugin-entrypoint, provider-regression, and release-artifact safety checks.
+
+## Current Next Roadmap
+
+- Add README screenshots under `docs/assets/` once stable images are available.
+- Expand local English command phrases without increasing cloud dependency.
+- Add richer provider health probes with bounded timeouts.
+- Improve local summarization quality while preserving cloud fallback controls.
+- Continue hardening plugin isolation; full OS-level sandboxing remains future work.
+- Move toward installer-grade packaging only after signing and release verification are fully specified.
+
+## Compared With Other Jarvis Projects
+
+Open.Jarvis is strongest in local-first Windows desktop automation, conservative safety gates, provider fallback controls, memory privacy, release hygiene, and test coverage. Larger assistant projects may be stronger in packaged distribution, mature plugin ecosystems, cloud-scale integrations, or full agent frameworks.
+
+| Area | Open.Jarvis status | Gap before public maturity |
+|---|---|---|
+| Safety | Destructive actions blocked by default, provider errors controlled, plugin entrypoints checked | Stronger per-action confirmation UX |
+| Quality | Unit tests, Ruff, project audit, release tests, hygiene, and public release checks | Larger eval set and more long-running smoke coverage |
+| Extensibility | Local plugin manifests, permissions, signatures, state audit, and runner helpers | Remote signed plugin catalogs and stronger isolation |
+| Offline posture | Local provider path, Vosk planning, and keyless degraded mode | Guided local STT/TTS/LLM installers |
+| Release maturity | Source release and portable ZIP workflow checks | Signed installer support remains future work |
+
+---
+
 ## Planned Or Experimental Features
 
 These items are roadmap or experimental work. They may have planning helpers or configuration placeholders, but they are not guaranteed production-ready flows yet.
