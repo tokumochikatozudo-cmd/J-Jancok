@@ -1,4 +1,4 @@
-"""JARVIS desktop UI - cyber hologram interface."""
+"""JANCOK desktop UI - cyber hologram interface."""
 
 from __future__ import annotations
 
@@ -52,7 +52,7 @@ class JarvisApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("JARVIS Cyber Interface")
+        self.title("JANCOK Operative Interface")
         self.geometry("1600x900")
         self.minsize(1366, 768)
         self.configure(fg_color=BG)
@@ -106,7 +106,7 @@ class JarvisApp(ctk.CTk):
         self._draw_mini_orb(brand, size=24).pack(side="left", padx=(0, 12))
         ctk.CTkLabel(
             brand,
-            text="JARVIS CYBER INTERFACE",
+            text="JANCOK OPERATIVE INTERFACE",
             font=font("display", 12, "bold"),
             text_color=TEXT,
         ).pack(side="left")
@@ -132,7 +132,7 @@ class JarvisApp(ctk.CTk):
                 text=text,
                 width=36,
                 height=28,
-                fg_color="#07101C",
+                fg_color="#1C070A",
                 hover_color=BLUE_DIM,
                 border_width=1,
                 border_color=BLUE,
@@ -158,6 +158,7 @@ class JarvisApp(ctk.CTk):
         content = ctk.CTkFrame(stage, fg_color=BG, corner_radius=0)
         content.grid(row=0, column=1, sticky="nsew")
         content.grid_columnconfigure(0, weight=1)
+        content.grid_rowconfigure(0, weight=1)
         content.bind("<Configure>", self._draw_background)
         self._background = ctk.CTkCanvas(content, bg=BG, highlightthickness=0)
         self._background.place(relx=0, rely=0, relwidth=1, relheight=1)
@@ -165,38 +166,39 @@ class JarvisApp(ctk.CTk):
         self._dashboard_page = ctk.CTkFrame(content, fg_color="transparent")
         self._dashboard_page.grid(row=0, column=0, sticky="nsew")
         self._dashboard_page.grid_columnconfigure(0, weight=1)
+        self._dashboard_page.grid_rowconfigure(1, weight=1)
 
         title_stack = ctk.CTkFrame(self._dashboard_page, fg_color="transparent")
         title_stack.place(x=34, y=34)
-        ctk.CTkLabel(title_stack, text="J.A.R.V.I.S", font=font("display", 18, "bold"), text_color=TEXT).pack(anchor="w")
+        ctk.CTkLabel(title_stack, text="J.A.N.C.O.K", font=font("display", 18, "bold"), text_color=PALETTE["text"]).pack(anchor="w")
         ctk.CTkFrame(title_stack, fg_color=BLUE, width=52, height=2).pack(anchor="w", pady=(9, 0))
         ctk.CTkFrame(title_stack, fg_color=LINE, width=170, height=1).pack(anchor="w")
         ctk.CTkLabel(
             title_stack,
-            text="CYBER HOLOGRAM INTERFACE",
+            text="GHOST PROTOCOL // NEURAL BREACH",
             font=font("mono", 10, "bold"),
             text_color=TEXT_DIM,
         ).pack(anchor="w", pady=(10, 0))
-        ctk.CTkLabel(title_stack, text="CORE READY", font=font("mono", 8, "bold"), text_color=GREEN).pack(anchor="w", pady=(7, 0))
+        ctk.CTkLabel(title_stack, text="// ZERO TRACE ACTIVE", font=font("mono", 8, "bold"), text_color=GREEN).pack(anchor="w", pady=(7, 0))
 
         top_spacer = ctk.CTkFrame(self._dashboard_page, fg_color="transparent", height=12)
         top_spacer.grid(row=0, column=0, sticky="ew")
 
-        self._canvas = ctk.CTkCanvas(self._dashboard_page, width=620, height=430, bg=BG, highlightthickness=0)
+        self._canvas = ctk.CTkCanvas(self._dashboard_page, width=600, height=480, bg=BG, highlightthickness=0)
         self._canvas.grid(row=1, column=0, pady=(0, 0))
         self._draw_hologram()
 
         self._title_label = ctk.CTkLabel(
             self._dashboard_page,
-            text="J A R V I S",
-            font=font("display", 58, "bold"),
+            text="J A N C O K",
+            font=font("display", 72, "bold"),
             text_color=BLUE,
         )
-        self._title_label.grid(row=2, column=0, pady=(4, 4))
+        self._title_label.grid(row=2, column=0, pady=(0, 2))
 
         self._subtitle_label = ctk.CTkLabel(
             self._dashboard_page,
-            text="I am a virtual assistant JARVIS, how may I help you?",
+            text="I am a virtual assistant JANCOK, how may I help you?",
             font=font("mono", 14),
             text_color=TEXT_DIM,
         )
@@ -208,9 +210,13 @@ class JarvisApp(ctk.CTk):
 
         self._status_label = ctk.CTkLabel(
             status_line,
-            text="STANDBY - SAY JARVIS",
+            text="STANDBY - SAY NEO",
             font=font("mono", 11, "bold"),
-            text_color=BLUE,
+            text_color="#070A12",
+            fg_color=BLUE,
+            corner_radius=999,
+            padx=22,
+            pady=5,
         )
         self._status_label.pack(side="left")
         ctk.CTkFrame(status_line, fg_color=LINE, width=58, height=1).pack(side="left", padx=(20, 0), pady=9)
@@ -237,7 +243,7 @@ class JarvisApp(ctk.CTk):
         self._draw_equalizer()
         ctk.CTkLabel(log_frame, text="COMMAND STREAM", font=font("mono", 8, "bold"), text_color=TEXT_DIM, fg_color=TERMINAL_BG).place(x=30, y=5)
 
-        self._add_log("JARVIS initialized", "info")
+        self._add_log("JANCOK operative core initialized", "info")
         self._add_log("Voice recognition active", "voice")
         self._add_log(STARTUP_GREETING, "ok")
         self._pages["dashboard"] = self._dashboard_page
@@ -292,8 +298,10 @@ class JarvisApp(ctk.CTk):
     def _show_page(self, page_key: str):
         self._active_page = page_key
         for key, frame in self._pages.items():
-            action = frame.grid if key == page_key else frame.grid_remove
-            action()
+            if key == page_key:
+                frame.grid(row=0, column=0, sticky="nsew")
+            else:
+                frame.grid_remove()
         refresh_sidebar(self._nav_canvases, page_key, self._hover_page)
         if page_key != "dashboard":
             title, subtitle = PAGE_TITLES[page_key]
@@ -354,7 +362,7 @@ class JarvisApp(ctk.CTk):
         subtitle = detail or profile.subtitle
         self._title_label.configure(text=profile.title, text_color=profile.accent)
         self._subtitle_label.configure(text=subtitle)
-        self._status_label.configure(text=profile.status, text_color=profile.accent)
+        self._status_label.configure(text=profile.status, text_color="#070A12", fg_color=profile.accent)
         if self._runtime_status_label is not None:
             self._runtime_status_label.configure(text=profile.name)
         if log_event:
@@ -382,15 +390,15 @@ class JarvisApp(ctk.CTk):
         if not message:
             return
         lowered = message.lower()
-        clean_message = message.replace("JARVIS:", "JARVIS:").strip()
+        clean_message = message.replace("JARVIS:", "JANCOK:").strip()
         inferred_state = infer_state_from_message(clean_message)
         if inferred_state:
             self.after(0, lambda: self.set_assistant_state(inferred_state, detail=clean_message, log_event=False))
         log_kind = infer_log_kind(clean_message)
         self.after(0, lambda: self._add_log(clean_message, log_kind))
-        if "jarvis:" in lowered or "[cmd]" in lowered or "you:" in lowered:
+        if "jancok:" in lowered or "neo:" in lowered or "[cmd]" in lowered or "you:" in lowered:
             self.after(0, self._increment_command_count)
-        if "jarvis:" in lowered:
+        if "jancok:" in lowered or "neo:" in lowered:
             self.after(1800, lambda: self.set_assistant_state("STANDBY", log_event=False))
         elif "error" in lowered or "failed" in lowered:
             self.after(2400, lambda: self.set_assistant_state("STANDBY", log_event=False))

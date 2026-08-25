@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from open_jarvis.health.observability import record_runtime_event
 from open_jarvis.providers import GroqProvider, ProviderRequest, ProviderRouter
+from open_jarvis.providers.openrouter import OpenRouterProvider
 from open_jarvis.providers.groq import (
     DEFAULT_GROQ_MODEL,
     GROQ_COOLDOWN_SECONDS,
@@ -155,14 +156,26 @@ def analyze_with_groq(command, *, client=None, logger=logger):
 
     logger.info("Analyzing command with provider router.")
     record_runtime_event("provider_request", "Analyzing command with provider router", "info", {"command_chars": len(command or "")})
-    provider = GroqProvider(
-        api_key=GROQ_API_KEY or ("injected-client" if active_client is not None else ""),
-        enabled=groq_enabled() or active_client is not None,
-        model=get_groq_model(),
-        client=active_client,
-        activate_cooldown=activate_groq_cooldown,
-        system_prompt=SYSTEM_PROMPT,
-    )
+    api_key = GROQ_API_KEY or ("injected-client" if active_client is not None else "")
+    enabled = groq_enabled() or active_client is not None
+    model = get_groq_model()
+    
+    if api_key.startswith("sk-or-") and active_client is None:
+        provider = OpenRouterProvider(
+            api_key=api_key,
+            enabled=enabled,
+            model=model,
+            system_prompt=SYSTEM_PROMPT,
+        )
+    else:
+        provider = GroqProvider(
+            api_key=api_key,
+            enabled=enabled,
+            model=model,
+            client=active_client,
+            activate_cooldown=activate_groq_cooldown,
+            system_prompt=SYSTEM_PROMPT,
+        )
     response = ProviderRouter(cloud_provider=provider).route(command)
     if response.ok and response.action is not None:
         return response.action
@@ -174,14 +187,26 @@ def analyze_with_groq(command, *, client=None, logger=logger):
 def analyze_with_groq_direct(command: str, *, client=None) -> dict:
     """Send a command directly to Groq for compatibility tests."""
 
-    provider = GroqProvider(
-        api_key=GROQ_API_KEY or ("injected-client" if client is not None else ""),
-        enabled=groq_enabled() or client is not None,
-        model=get_groq_model(),
-        client=client,
-        activate_cooldown=activate_groq_cooldown,
-        system_prompt=SYSTEM_PROMPT,
-    )
+    api_key = GROQ_API_KEY or ("injected-client" if client is not None else "")
+    enabled = groq_enabled() or client is not None
+    model = get_groq_model()
+    
+    if api_key.startswith("sk-or-") and client is None:
+        provider = OpenRouterProvider(
+            api_key=api_key,
+            enabled=enabled,
+            model=model,
+            system_prompt=SYSTEM_PROMPT,
+        )
+    else:
+        provider = GroqProvider(
+            api_key=api_key,
+            enabled=enabled,
+            model=model,
+            client=client,
+            activate_cooldown=activate_groq_cooldown,
+            system_prompt=SYSTEM_PROMPT,
+        )
     response = provider.analyze(ProviderRequest(command=command, allow_cloud=True, allow_memory_context=False))
     if response.action:
         return response.action
@@ -196,12 +221,23 @@ def summarize_text(text, *, client=None, logger=logger):
         logger.warning("Summarization skipped because GROQ_API_KEY is missing.")
         return None
 
-    provider = GroqProvider(
-        api_key=GROQ_API_KEY or ("injected-client" if active_client is not None else ""),
-        enabled=groq_enabled() or active_client is not None,
-        model=get_groq_model(),
-        client=active_client,
-    )
+    api_key = GROQ_API_KEY or ("injected-client" if active_client is not None else "")
+    enabled = groq_enabled() or active_client is not None
+    model = get_groq_model()
+
+    if api_key.startswith("sk-or-") and active_client is None:
+        provider = OpenRouterProvider(
+            api_key=api_key,
+            enabled=enabled,
+            model=model,
+        )
+    else:
+        provider = GroqProvider(
+            api_key=api_key,
+            enabled=enabled,
+            model=model,
+            client=active_client,
+        )
     response = provider.summarize(text)
     if response.ok:
         return response.text

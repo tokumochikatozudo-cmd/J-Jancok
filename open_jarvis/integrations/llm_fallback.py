@@ -17,7 +17,10 @@ def select_llm_provider(env: Mapping[str, str] | None = None) -> dict[str, str]:
     """Choose the best available routing provider without making network calls."""
 
     env = env or {}
-    if str(env.get("GROQ_API_KEY", "")).strip():
+    api_key = str(env.get("GROQ_API_KEY", "")).strip()
+    if api_key.startswith("sk-or-"):
+        return {"provider": "openrouter", "mode": "free_cloud", "reason": "OpenRouter key configured — smart model selection active"}
+    if api_key:
         return {"provider": "groq", "mode": "free_cloud", "reason": "GROQ_API_KEY is configured"}
     if str(env.get("JARVIS_LOCAL_LLM_URL", "")).strip():
         return {"provider": "local", "mode": "offline", "reason": "Local LLM endpoint is configured"}

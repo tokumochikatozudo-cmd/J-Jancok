@@ -16,13 +16,13 @@ class LogEvent:
 
 
 EVENT_COLORS = {
-    "info": "#8FB7C8",
-    "voice": "#00D7FF",
-    "cmd": "#D8F6FF",
-    "task": "#4CEBFF",
-    "ok": "#00FFC6",
-    "warn": "#FFC857",
-    "error": "#FF4D6D",
+    "info": "#C8904A",
+    "voice": "#FF2000",
+    "cmd": "#FFF0D0",
+    "task": "#FF6600",
+    "ok": "#FFD000",
+    "warn": "#FFAA00",
+    "error": "#FF0000",
 }
 
 EVENT_PREFIXES = {
@@ -79,6 +79,6 @@ def infer_log_kind(message: str) -> str:
         return "cmd"
     if "analysis" in lowered or "processing" in lowered or "routing" in lowered or "launching" in lowered or "executing" in lowered:
         return "task"
-    if "jarvis:" in lowered or "success" in lowered or "ready" in lowered or "completed" in lowered:
+    if "jancok:" in lowered or "neo:" in lowered or "success" in lowered or "ready" in lowered or "completed" in lowered:
         return "ok"
     return "info"

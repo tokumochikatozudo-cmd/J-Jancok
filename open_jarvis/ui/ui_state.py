@@ -1,4 +1,4 @@
-"""Assistant state profiles for the JARVIS cockpit UI."""
+"""Assistant state profiles for the NEO cockpit UI."""
 
 from __future__ import annotations
 
@@ -33,19 +33,19 @@ ASSISTANT_STATE_ORDER = (
 ASSISTANT_STATE_PROFILES = {
     "BOOTING": AssistantStateProfile(
         name="BOOTING",
-        title="J A R V I S",
+        title="J A N C O K",
         subtitle="Initializing assistant runtime...",
         status="BOOTING CORE",
-        accent="#4CEBFF",
+        accent="#FF4400",
         reactor_speed=1.4,
         signal_activity=0.45,
     ),
     "STANDBY": AssistantStateProfile(
         name="STANDBY",
-        title="J A R V I S",
-        subtitle="I am a virtual assistant JARVIS, how may I help you?",
-        status="STANDBY - SAY JARVIS",
-        accent="#00D7FF",
+        title="J A N C O K",
+        subtitle="I am a virtual assistant JANCOK, how may I help you?",
+        status="STANDBY - SAY NEO",
+        accent="#FF2000",
         reactor_speed=1.0,
         signal_activity=0.35,
     ),
@@ -54,7 +54,7 @@ ASSISTANT_STATE_PROFILES = {
         title="LISTENING",
         subtitle="Voice input active. Waiting for your command...",
         status="LISTENING...",
-        accent="#4CEBFF",
+        accent="#FF0000",
         reactor_speed=1.65,
         signal_activity=1.0,
     ),
@@ -63,7 +63,7 @@ ASSISTANT_STATE_PROFILES = {
         title="PROCESSING",
         subtitle="Analyzing request and selecting the best route...",
         status="PROCESSING REQUEST",
-        accent="#89F2FF",
+        accent="#FFD000",
         reactor_speed=1.9,
         signal_activity=0.7,
     ),
@@ -72,7 +72,7 @@ ASSISTANT_STATE_PROFILES = {
         title="EXECUTING",
         subtitle="Running the selected command...",
         status="EXECUTING COMMAND",
-        accent="#00FFC6",
+        accent="#FF6600",
         reactor_speed=1.55,
         signal_activity=0.55,
     ),
@@ -81,7 +81,7 @@ ASSISTANT_STATE_PROFILES = {
         title="RESPONDING",
         subtitle="Voice response active...",
         status="RESPONDING...",
-        accent="#4CEBFF",
+        accent="#FF4400",
         reactor_speed=1.25,
         signal_activity=0.95,
     ),
@@ -90,7 +90,7 @@ ASSISTANT_STATE_PROFILES = {
         title="ERROR",
         subtitle="Command failed. Check the command stream for details.",
         status="COMMAND FAILED",
-        accent="#FF4D6D",
+        accent="#FF0000",
         reactor_speed=0.8,
         signal_activity=0.2,
     ),
@@ -99,7 +99,7 @@ ASSISTANT_STATE_PROFILES = {
         title="OFFLINE",
         subtitle="Assistant services are unavailable.",
         status="OFFLINE",
-        accent="#FFC857",
+        accent="#FF8800",
         reactor_speed=0.45,
         signal_activity=0.15,
     ),
@@ -124,7 +124,7 @@ def infer_state_from_message(message: str) -> str | None:
         return "ERROR"
     if "[speaking]" in lowered or "speaking started" in lowered:
         return "SPEAKING"
-    if "jarvis:" in lowered:
+    if "jancok:" in lowered or "neo:" in lowered:
         return "SPEAKING"
     if "listening" in lowered or "wake word detected" in lowered:
         return "LISTENING"

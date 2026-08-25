@@ -1,33 +1,33 @@
-"""Premium visual design tokens for the JARVIS desktop UI."""
+"""Premium visual design tokens for the NEO desktop UI."""
 
 from __future__ import annotations
 
 PALETTE = {
-    "bg": "#070A12",
-    "bg_elevated": "#0C1322",
-    "surface": "#0C1322",
-    "surface_soft": "#101B2D",
-    "surface_glass": "#061018",
-    "line": "#11304A",
-    "line_soft": "#1A4564",
-    "line_hot": "#00D7FF",
-    "cyan": "#00D7FF",
-    "cyan_soft": "#4CEBFF",
-    "cyan_hot": "#89F2FF",
-    "blue": "#0aa7d8",
-    "amber": "#FFC857",
-    "green": "#00FFC6",
-    "red": "#FF4D6D",
-    "text": "#D8F6FF",
-    "text_muted": "#8FB7C8",
-    "text_faint": "#5F7D8E",
-    "ink": "#061018",
+    "bg": "#060302",
+    "bg_elevated": "#0C0602",
+    "surface": "#100804",
+    "surface_soft": "#1A0C04",
+    "surface_glass": "#080401",
+    "line": "#4A1A00",
+    "line_soft": "#6B2800",
+    "line_hot": "#FF2000",
+    "cyan": "#FF2000",
+    "cyan_soft": "#FF6600",
+    "cyan_hot": "#FFD000",
+    "blue": "#FF2000",
+    "amber": "#FFD000",
+    "green": "#FF4400",
+    "red": "#FF0000",
+    "text": "#FFF0D0",
+    "text_muted": "#C8904A",
+    "text_faint": "#7A4A20",
+    "ink": "#100502",
 }
 
 FONTS = {
-    "display": "Orbitron",
-    "ui": "Bahnschrift",
-    "mono": "Cascadia Mono",
+    "display": "Consolas",
+    "ui": "Segoe UI",
+    "mono": "Consolas",
 }
 
 RADIUS = {

@@ -1,4 +1,4 @@
-"""Dialog windows used by the JARVIS desktop UI."""
+"""Dialog windows used by the NEO desktop UI."""
 
 from __future__ import annotations
 
@@ -110,7 +110,7 @@ class SettingsDialog(ctk.CTkToplevel):
     def __init__(self, master, on_saved=None):
         super().__init__(master)
         self.on_saved = on_saved
-        self.title("JARVIS Settings")
+        self.title("JANCOK Settings")
         self.geometry("1080x720")
         self.configure(fg_color=BG)
         self.grab_set()
@@ -148,7 +148,7 @@ class SettingsDialog(ctk.CTkToplevel):
         actions.grid(row=0, column=1, rowspan=2, padx=18, pady=16, sticky="e")
         ctk.CTkButton(actions, text="Copy template", fg_color=BLUE_DIM, command=self._copy_template).pack(side="left", padx=4)
         ctk.CTkButton(actions, text="Refresh health", fg_color=BLUE_DIM, command=self._refresh_health).pack(side="left", padx=4)
-        ctk.CTkButton(actions, text="Save", fg_color=GREEN, text_color="#00140a", command=self._save).pack(side="left", padx=4)
+        ctk.CTkButton(actions, text="Save", fg_color=GREEN, text_color="#140003", command=self._save).pack(side="left", padx=4)
 
         left = ctk.CTkFrame(self, fg_color=BG2, corner_radius=28, border_width=1, border_color=LINE)
         left.grid(row=1, column=0, padx=(18, 9), pady=18, sticky="nsew")
@@ -238,7 +238,7 @@ class SettingsDialog(ctk.CTkToplevel):
         if self.on_saved:
             self.on_saved(settings)
         if result["status"] == "saved":
-            self._status_label.configure(text=f"Saved non-secret settings to {result['path']}. Restart JARVIS for runtime-sensitive changes.")
+            self._status_label.configure(text=f"Saved non-secret settings to {result['path']}. Restart JANCOK for runtime-sensitive changes.")
         else:
             self._status_label.configure(text="Settings were not saved: " + "; ".join(result.get("errors", [])))
 
@@ -250,7 +250,7 @@ class SettingsDialog(ctk.CTkToplevel):
 class RuntimeLogDialog(ctk.CTkToplevel):
     def __init__(self, master):
         super().__init__(master)
-        self.title("JARVIS Runtime Logs")
+        self.title("JANCOK Runtime Logs")
         self.geometry("960x680")
         self.configure(fg_color=BG)
         self.grab_set()
@@ -331,7 +331,7 @@ class RuntimeLogDialog(ctk.CTkToplevel):
 class ReadmeDialog(ctk.CTkToplevel):
     def __init__(self, master):
         super().__init__(master)
-        self.title("JARVIS README")
+        self.title("JANCOK README")
         self.geometry("1040x720")
         self.configure(fg_color=BG)
         self.grab_set()
@@ -347,7 +347,7 @@ class ReadmeDialog(ctk.CTkToplevel):
         )
         ctk.CTkLabel(
             header,
-            text="Project documentation is shown inside JARVIS so first-run setup stays polished.",
+            text="Project documentation is shown inside JANCOK so first-run setup stays polished.",
             font=font("ui", 11),
             text_color=TEXT_DIM,
         ).grid(row=1, column=0, padx=18, pady=(0, 16), sticky="w")
@@ -371,7 +371,7 @@ class ReadmeDialog(ctk.CTkToplevel):
 class HealthCenterDialog(ctk.CTkToplevel):
     def __init__(self, master):
         super().__init__(master)
-        self.title("JARVIS Health Center")
+        self.title("JANCOK Health Center")
         self.geometry("1000x700")
         self.configure(fg_color=BG)
         self.grab_set()
@@ -439,7 +439,7 @@ class HealthCenterDialog(ctk.CTkToplevel):
 class MemoryViewerDialog(ctk.CTkToplevel):
     def __init__(self, master):
         super().__init__(master)
-        self.title("JARVIS Memory Center")
+        self.title("JANCOK Memory Center")
         self.geometry("1000x700")
         self.configure(fg_color=BG)
         self.grab_set()

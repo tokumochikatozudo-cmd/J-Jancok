@@ -21,18 +21,18 @@ def draw_background_depth(canvas, *, palette: dict) -> None:
     canvas.create_rectangle(0, 0, width, height, fill=bg, outline="")
     cx = int(width * 0.60)
     cy = int(height * 0.31)
-    for radius, color in [(360, "#071725"), (300, "#082033"), (240, "#092a3f"), (180, "#073247")]:
+    for radius, color in [(360, "#170800"), (300, "#200500"), (240, "#290300"), (180, "#321500")]:
         canvas.create_oval(cx - radius, cy - radius, cx + radius, cy + radius, outline=color, width=1)
     for y in range(14, height, 28):
-        canvas.create_line(0, y, width, y, fill="#081322", width=1)
+        canvas.create_line(0, y, width, y, fill="#120800", width=1)
     for y in range(0, height, 5):
-        canvas.create_line(0, y, width, y, fill="#070d17", width=1)
+        canvas.create_line(0, y, width, y, fill="#0D0500", width=1)
     for index in range(36):
         x = (index * 137) % max(width, 1)
         y = (index * 89) % max(height, 1)
         canvas.create_rectangle(x, y, x + 1, y + 1, fill=soft if index % 4 == 0 else line, outline="")
     for side in range(5):
-        alpha_color = ["#060912", "#060b14", "#070d17", "#07101b", "#07121e"][side]
+        alpha_color = ["#090500", "#0B0600", "#0D0700", "#100800", "#130A00"][side]
         canvas.create_rectangle(side, side, width - side, side + 1, fill=alpha_color, outline="")
         canvas.create_rectangle(side, height - side - 2, width - side, height - side - 1, fill=alpha_color, outline="")
     canvas.create_line(width * 0.18, height * 0.04, width * 0.82, height * 0.04, fill=line, width=1)
@@ -57,9 +57,9 @@ def draw_active_sidebar_icon(canvas, *, palette: dict) -> None:
     glow = palette["cyan_soft"]
     panel = palette["surface"]
     canvas.delete("all")
-    canvas.create_rectangle(2, 2, 58, 58, outline="#123c58", width=3)
+    canvas.create_rectangle(2, 2, 58, 58, outline="#581220", width=3)
     canvas.create_rectangle(6, 6, 54, 54, fill=panel, outline=accent, width=1)
-    canvas.create_oval(16, 16, 44, 44, outline="#085e79", width=5)
+    canvas.create_oval(16, 16, 44, 44, outline="#790820", width=5)
     canvas.create_oval(18, 18, 42, 42, outline=accent, width=3)
     canvas.create_oval(25, 25, 35, 35, outline=glow, width=1)
 
@@ -100,7 +100,7 @@ def draw_sidebar_nav_icon(canvas, icon: str, *, palette: dict, active: bool = Fa
 
     canvas.delete("all")
     if active or hover:
-        outer = palette["cyan_soft"] if hover else "#123c58"
+        outer = palette["cyan_soft"] if hover else "#581220"
         inner = palette["cyan_hot"] if hover else palette["cyan"]
         canvas.create_rectangle(2, 2, int(canvas["width"]) - 2, int(canvas["height"]) - 2, outline=outer, width=3)
         canvas.create_rectangle(6, 6, int(canvas["width"]) - 6, int(canvas["height"]) - 6, fill=palette["surface"], outline=inner, width=1)
@@ -139,7 +139,7 @@ def draw_mini_orb(canvas, size: int, *, palette: dict, phase: float = 0.0) -> No
     line = palette["line"]
     pulse = 2 * math.sin(phase)
     canvas.create_oval(3, 3, size - 3, size - 3, outline=line, width=1)
-    canvas.create_oval(8, 8, size - 8, size - 8, outline="#06374d", width=1)
+    canvas.create_oval(8, 8, size - 8, size - 8, outline="#4d0615", width=1)
     canvas.create_oval(center - 8 - pulse, center - 8 - pulse, center + 8 + pulse, center + 8 + pulse, outline=accent, width=2)
     canvas.create_oval(center - 3, center - 3, center + 3, center + 3, fill=glow, outline="")
     for angle in [phase * 30, phase * 30 + 90, phase * 30 + 180, phase * 30 + 270]:
@@ -163,7 +163,7 @@ def draw_equalizer(canvas, phase: float, *, palette: dict, activity: float = 1.0
         value = 6 + int((center_weight * 36 + (wave + 1) * 8 + (secondary + 1) * 4) * activity)
         x = 8 + index * 10
         color = glow if center_weight > 0.75 else accent
-        canvas.create_rectangle(x - 1, 64 - value - 2, x + 4, 64, fill="#05364a", outline="")
+        canvas.create_rectangle(x - 1, 64 - value - 2, x + 4, 64, fill="#4a0515", outline="")
         canvas.create_rectangle(x, 64 - value, x + 3, 64, fill=color, outline="")
 
 
@@ -174,9 +174,9 @@ def draw_waveform(canvas, phase: float, *, palette: dict, activity: float = 1.0)
     width = int(canvas["width"])
     height = int(canvas["height"])
     for x in range(16, width, 24):
-        canvas.create_line(x, 5, x, height - 5, fill="#0b2234", width=1)
+        canvas.create_line(x, 5, x, height - 5, fill="#340b15", width=1)
     for y in range(12, height, 12):
-        canvas.create_line(5, y, width - 5, y, fill="#0b2234", width=1)
+        canvas.create_line(5, y, width - 5, y, fill="#340b15", width=1)
     points = []
     baseline = height // 2
     for index in range(36):
@@ -186,7 +186,7 @@ def draw_waveform(canvas, phase: float, *, palette: dict, activity: float = 1.0)
         envelope = 0.45 + 0.55 * math.sin(phase * 0.6 + index * 0.16) ** 2
         y = baseline + (carrier * 7 + detail * 3) * envelope * activity
         points.extend([x, y])
-    canvas.create_line(points, fill="#074b67", width=4, smooth=True)
+    canvas.create_line(points, fill="#500010", width=4, smooth=True)
     canvas.create_line(points, fill=palette["cyan"], width=1, smooth=True)
     for index in range(0, len(points), 8):
         canvas.create_oval(points[index] - 1, points[index + 1] - 1, points[index] + 1, points[index + 1] + 1, fill=palette["cyan"], outline="")

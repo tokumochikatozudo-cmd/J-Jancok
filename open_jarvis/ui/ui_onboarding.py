@@ -31,7 +31,7 @@ class OnboardingWizard(ctk.CTkToplevel):
     def __init__(self, master, on_complete=None):
         super().__init__(master)
         self.on_complete = on_complete
-        self.title("JARVIS Setup Wizard")
+        self.title("JANCOK Setup Wizard")
         self.geometry("1120x740")
         self.configure(fg_color=BG)
         self.resizable(True, True)
@@ -51,7 +51,7 @@ class OnboardingWizard(ctk.CTkToplevel):
 
         ctk.CTkLabel(
             header,
-            text="JARVIS FIRST-RUN SETUP",
+            text="JANCOK FIRST-RUN SETUP",
             font=font("display", 22, "bold"),
             text_color=BLUE,
         ).grid(row=0, column=0, padx=18, pady=18, sticky="w")
@@ -69,22 +69,22 @@ class OnboardingWizard(ctk.CTkToplevel):
             controls,
             text="Copy .env template",
             fg_color=BLUE_DIM,
-            hover_color="#004c7a",
+            hover_color="#8A2000",
             command=self._copy_env_template,
         ).pack(side="left", padx=4)
         ctk.CTkButton(
             controls,
             text="Open README",
             fg_color=BLUE_DIM,
-            hover_color="#004c7a",
+            hover_color="#8A2000",
             command=self._open_readme,
         ).pack(side="left", padx=4)
         ctk.CTkButton(
             controls,
             text="Finish setup",
             fg_color=GREEN,
-            hover_color="#00cc66",
-            text_color="#00140a",
+            hover_color="#FF4400",
+            text_color="#0A0400",
             command=self._finish,
         ).pack(side="left", padx=4)
 
@@ -123,7 +123,7 @@ class OnboardingWizard(ctk.CTkToplevel):
 
         footer = ctk.CTkFrame(right, fg_color="transparent")
         footer.pack(fill="x", padx=16, pady=(0, 16))
-        ctk.CTkButton(footer, text="Recheck", fg_color=BLUE_DIM, hover_color="#004c7a", command=self._render).pack(side="left")
+        ctk.CTkButton(footer, text="Recheck", fg_color=BLUE_DIM, hover_color="#8A2000", command=self._render).pack(side="left")
         ctk.CTkButton(footer, text="Skip for now", fg_color="#4a1f1f", hover_color="#7a2a2a", command=self._skip).pack(side="right")
 
     def _render(self):

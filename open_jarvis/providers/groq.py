@@ -15,7 +15,7 @@ try:
 except ImportError:  # pragma: no cover - optional dependency is installed in normal dev/test flows.
     GroqError = RuntimeError
 
-DEFAULT_GROQ_MODEL = "llama-3.1-8b-instant"
+DEFAULT_GROQ_MODEL = "google/gemini-2.5-flash"
 GROQ_COOLDOWN_SECONDS = 120
 _groq_cooldown_until = 0.0
 
@@ -167,5 +167,5 @@ class GroqProvider:
             from groq import Groq
         except ImportError:
             return None
-        self.client = Groq(api_key=self.api_key)
+        self.client = Groq(api_key=self.api_key, base_url="https://openrouter.ai/api/v1")
         return self.client

@@ -15,8 +15,8 @@ WAKE_WORD = str(WAKE_WORD_CONFIG["wake_word"])
 ACTIVE_TIMEOUT = int(os.getenv("JARVIS_ACTIVE_TIMEOUT", "60"))
 
 _wake_recognizer = sr.Recognizer()
-_wake_recognizer.energy_threshold = int(os.getenv("JARVIS_ENERGY_THRESHOLD", "300"))
-_wake_recognizer.dynamic_energy_threshold = True
+_wake_recognizer.energy_threshold = int(os.getenv("JARVIS_ENERGY_THRESHOLD", "150"))
+_wake_recognizer.dynamic_energy_threshold = False
 
 active = False
 
@@ -32,8 +32,8 @@ def listen_for_wake_word(*, logger, send_log) -> None:
     while True:
         try:
             with sr.Microphone() as source:
-                _wake_recognizer.adjust_for_ambient_noise(source, duration=0.1)
-                audio = _wake_recognizer.listen(source, timeout=3, phrase_time_limit=3)
+                _wake_recognizer.adjust_for_ambient_noise(source, duration=0.05)
+                audio = _wake_recognizer.listen(source, timeout=5, phrase_time_limit=4)
             text = transcribe_audio(_wake_recognizer, audio, language="en-US", prefer_offline=True)
             if not text:
                 continue

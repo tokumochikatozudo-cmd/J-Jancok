@@ -1,4 +1,4 @@
-"""Voice personality helpers for JARVIS."""
+"""Voice personality helpers for JANCOK."""
 
 from __future__ import annotations
 
@@ -19,11 +19,11 @@ JOKES = [
 ]
 
 GOODBYES = [
-    "It's been a pleasure serving you today, sir. Jarvis signing off.",
+    "It's been a pleasure serving you today, sir. JANCOK signing off.",
     "Until next time, sir. I'll keep the systems warm for your return.",
     "Farewell, sir. The lab is yours. I'll be right here when you need me.",
     "Signing off now, sir. Don't forget - I'm always just a word away.",
-    "Goodbye, sir. It was an honour, as always. Jarvis shutting down.",
+    "Goodbye, sir. It was an honour, as always. JANCOK shutting down.",
     "Take care, sir. I'll have everything ready for when you're back.",
 ]
 
@@ -54,8 +54,8 @@ def greet(*, speak, send_log, logger=None) -> None:
         greeting = "Good evening"
     else:
         greeting = "Good night"
-    safe_speak(f"{greeting}, sir. Jarvis is online. Say Jarvis to activate me.", speak=speak, send_log=send_log, logger=logger)
-    send_log(f"JARVIS: {greeting}, sir. All systems are ready.")
+    safe_speak(f"{greeting}, sir. J. A. N. C. O. K. is online. Say NEO to activate me.", speak=speak, send_log=send_log, logger=logger)
+    send_log(f"JANCOK: {greeting}, sir. All systems are ready.")
 
 
 def say_goodbye(*, speak, send_log=None, logger=None) -> None:
@@ -78,4 +78,4 @@ def maybe_tell_joke(*, speak, send_log, logger, state: dict) -> None:
         joke = random.choice(JOKES)
         logger.info("Telling random joke.")
         if safe_speak(joke, speak=speak, send_log=send_log, logger=logger):
-            send_log(f"JARVIS: {joke}")
+            send_log(f"JANCOK: {joke}")

@@ -45,7 +45,7 @@ def emit_startup_readiness(
     stt_mode = recognition_mode() if recognition_mode is not None else "unknown"
 
     if not groq_ready:
-        send_log("[WARN] Groq API key not found. Running in local-only mode.")
+        send_log("[WARN] Cloud AI key not found. Running in local-only mode.")
     if not spotify_ready:
         send_log("[WARN] Spotify credentials not found. Spotify integration disabled.")
     if not mic_ready:
